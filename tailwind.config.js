@@ -23,10 +23,7 @@ export default {
                 primary: "#0984e3",
                 secondary: "#81ecec",
                 dark: "#0f172a",
-            },
-            screens: {
-                "2xl": "1320px",
-            },
+            }
         },
     },
 

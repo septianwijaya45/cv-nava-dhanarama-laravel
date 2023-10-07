@@ -2,6 +2,7 @@ import "@/public/css/style.css";
 import "@/Components/Navbar/script";
 import React, { useEffect, useState } from "react";
 import navaIcon from "@/public/icon/nava3d.png";
+import { Link } from "react-scroll";
 
 const Navbar = () => {
     const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -28,7 +29,7 @@ const Navbar = () => {
     }, [isMenuVisible]);
 
     return (
-        <>
+        <div className="container">
             <header className="bg-transparent absolute top-0 left-0 w-full flex items-center z-10">
                 <div className="container">
                     <div className="flex items-center justify-between relative">
@@ -71,52 +72,54 @@ const Navbar = () => {
                             >
                                 <ul className="block lg:flex">
                                     <li className="group">
-                                        <a
-                                            href="#home"
-                                            className="text-base text-dark py-2 px-8 flex hover:text-primary"
+                                        <Link
+                                            to="home"
+                                            smooth={true}
+                                            duration={500}
+                                            className="text-base text-dark py-2 px-8 flex hover:text-primary cursor-pointer"
                                         >
                                             Home
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="group">
-                                        <a
-                                            href="#portfolio"
-                                            className="text-base text-dark py-2 px-8 flex hover:text-primary"
+                                        <Link
+                                            to="portfolio"
+                                            smooth={true}
+                                            duration={500}
+                                            className="text-base text-dark py-2 px-8 flex hover:text-primary cursor-pointer"
                                         >
                                             Portfolio
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="group">
-                                        <a
-                                            href="#about"
-                                            className="text-base text-dark py-2 px-8 flex hover:text-primary"
+                                        <Link
+                                            to="about"
+                                            smooth={true}
+                                            duration={500}
+                                            className="text-base text-dark py-2 px-8 flex hover:text-primary cursor-pointer"
                                         >
                                             About
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="group">
-                                        <a
-                                            href="#tech"
-                                            className="text-base text-dark py-2 px-8 flex hover:text-primary"
-                                        >
-                                            Tech
-                                        </a>
-                                    </li>
-                                    <li className="group">
-                                        <a
-                                            href="#testimonial"
-                                            className="text-base text-dark py-2 px-8 flex hover:text-primary"
+                                        <Link
+                                            to="testimonial"
+                                            smooth={true}
+                                            duration={500}
+                                            className="text-base text-dark py-2 px-8 flex hover:text-primary cursor-pointer"
                                         >
                                             Testimonial
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="group">
-                                        <a
-                                            href="#footer"
-                                            className="text-base text-dark py-2 px-8 flex hover:text-primary"
+                                        <Link
+                                            to="contact"
+                                            smooth={true}
+                                            duration={500}
+                                            className="text-base text-dark py-2 px-8 flex hover:text-primary cursor-pointer"
                                         >
                                             Contact
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </nav>
@@ -124,7 +127,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </header>
-        </>
+        </div>
     );
 };
 
