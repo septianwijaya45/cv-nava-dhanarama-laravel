@@ -6,12 +6,18 @@ const Card = ({portfolio}) => {
           <img src={portfolio.linkImg} className="h-40 w-full object-cover" />
           <div className="p-5 border border-b">
               <h1 className="py-2 truncate">{portfolio.title}</h1>
-          <a
-              href={portfolio.link}
-              className="text-sm font-semibold text-white bg-primary py-3 px-8 rounded-full hover:shadow-lg hover:opacity-80 transition duration-300 ease-in-out"
-          >
-              See Project
-          </a>
+              {portfolio.link !== "#" && portfolio.link !== null ? (
+                  <a
+                      href={portfolio.link}
+                      className="text-sm font-semibold text-white bg-primary py-3 px-8 rounded-full hover:shadow-lg hover:opacity-80 transition duration-300 ease-in-out"
+                  >
+                      See Project
+                  </a>
+              ) : (
+                  <p className="text-sm font-semibold text-gray-500">
+                      Not Available To Show
+                  </p>
+              )}
           </div>
 
           <div className="absolute top-0 bg-white m-3 px-2 py-[2.5px] rounded font-bold">
