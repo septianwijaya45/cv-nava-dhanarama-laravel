@@ -1,7 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import { useState } from 'react';
-import useCustomModals from '@/Hooks/useCustomModals';
+import useCustomModals from '@/hooks/useCustomModals.jsx';
 import CustomModal from '@/Components/Modal/CustomModal.jsx';
 
 export default function ClientIndex({ auth, clients, filters }) {
@@ -20,7 +20,7 @@ export default function ClientIndex({ auth, clients, filters }) {
             'This action cannot be undone.',
             'Delete Client'
         );
-        
+
         if (confirmed) {
             router.delete(route('admin.clients.destroy', id));
         }

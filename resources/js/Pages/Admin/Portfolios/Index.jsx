@@ -1,7 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import { useState } from 'react';
-import useCustomModals from '@/Hooks/useCustomModals';
+import useCustomModals from '@/hooks/useCustomModals.jsx';
 import CustomModal from '@/Components/Modal/CustomModal.jsx';
 
 export default function PortfolioIndex({ auth, portfolios, filters }) {
@@ -20,7 +20,7 @@ export default function PortfolioIndex({ auth, portfolios, filters }) {
             'This action cannot be undone.',
             'Delete Portfolio'
         );
-        
+
         if (confirmed) {
             router.delete(route('admin.portfolios.destroy', id));
         }

@@ -1,7 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import { useState } from 'react';
-import useCustomModals from '@/Hooks/useCustomModals';
+import useCustomModals from '@/hooks/useCustomModals.jsx';
 import CustomModal from '@/Components/Modal/CustomModal.jsx';
 
 export default function MessageIndex({ auth, messages, filters }) {
@@ -20,7 +20,7 @@ export default function MessageIndex({ auth, messages, filters }) {
             `Subject: "${subject}"`,
             'Delete Message'
         );
-        
+
         if (confirmed) {
             router.delete(route('admin.messages.destroy', id));
         }

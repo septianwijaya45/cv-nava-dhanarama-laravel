@@ -1,14 +1,14 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import { useState } from 'react';
-import useCustomModals from '@/Hooks/useCustomModals.jsx';
+import useCustomModals from '@/hooks/useCustomModals.jsx';
 import CustomModal from '@/Components/Modal/CustomModal.jsx';
 
 export default function BlogIndex({ auth, blogs, categories, filters }) {
     const [search, setSearch] = useState(filters.search || '');
     const [category, setCategory] = useState(filters.category || '');
     const [status, setStatus] = useState(filters.status || '');
-    
+
     const { customConfirm, ConfirmComponent } = useCustomModals();
 
     const handleSearch = (e) => {
@@ -31,7 +31,7 @@ export default function BlogIndex({ auth, blogs, categories, filters }) {
             cancelText: 'Cancel',
             type: 'danger'
         });
-        
+
         if (confirmed) {
             router.delete(route('admin.blogs.destroy', id));
         }
@@ -232,7 +232,7 @@ export default function BlogIndex({ auth, blogs, categories, filters }) {
                     </div>
                 </div>
             </div>
-            
+
             {/* Custom Modal Components */}
             <ConfirmComponent />
         </AdminLayout>
