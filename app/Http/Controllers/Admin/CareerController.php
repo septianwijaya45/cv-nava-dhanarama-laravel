@@ -15,7 +15,7 @@ class CareerController extends Controller
 
         // Search functionality
         if ($request->filled('search')) {
-            $query->where('title', 'like', '%' . $request->search . '%')
+            $query->where('position', 'like', '%' . $request->search . '%')
                   ->orWhere('department', 'like', '%' . $request->search . '%');
         }
 
@@ -51,23 +51,20 @@ class CareerController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
             'description' => 'required|string',
-            'requirements' => 'nullable|string',
-            'responsibilities' => 'nullable|string',
-            'benefits' => 'nullable|string',
-            'department' => 'required|string|max:100',
-            'type' => 'required|in:full-time,part-time,contract,remote',
-            'location' => 'nullable|string|max:255',
-            'salary' => 'nullable|string|max:100',
-            'experience_level' => 'nullable|string|max:100',
-            'posted_date' => 'nullable|date',
+            'qualification' => 'nullable|string',
+            'department' => 'nullable|string|max:100',
+            'type' => 'required|in:full-time,part-time,contract',
+            'location' => 'required|in:remote,onsite',
+            'posted_at' => 'nullable|date',
             'deadline' => 'nullable|date',
+            'status' => 'boolean',
             'is_active' => 'boolean',
         ]);
 
-        if (!isset($validated['posted_date'])) {
-            $validated['posted_date'] = now();
+        if (!isset($validated['posted_at'])) {
+            $validated['posted_at'] = now();
         }
 
         Career::create($validated);
@@ -93,18 +90,15 @@ class CareerController extends Controller
     public function update(Request $request, Career $career)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
             'description' => 'required|string',
-            'requirements' => 'nullable|string',
-            'responsibilities' => 'nullable|string',
-            'benefits' => 'nullable|string',
-            'department' => 'required|string|max:100',
-            'type' => 'required|in:full-time,part-time,contract,remote',
-            'location' => 'nullable|string|max:255',
-            'salary' => 'nullable|string|max:100',
-            'experience_level' => 'nullable|string|max:100',
-            'posted_date' => 'nullable|date',
+            'qualification' => 'nullable|string',
+            'department' => 'nullable|string|max:100',
+            'type' => 'required|in:full-time,part-time,contract',
+            'location' => 'required|in:remote,onsite',
+            'posted_at' => 'nullable|date',
             'deadline' => 'nullable|date',
+            'status' => 'boolean',
             'is_active' => 'boolean',
         ]);
 

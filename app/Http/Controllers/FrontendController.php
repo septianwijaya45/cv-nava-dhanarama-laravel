@@ -7,6 +7,8 @@ use App\Models\Portfolio;
 use App\Models\Client;
 use App\Models\Career;
 use App\Models\ApplicationRequest;
+use App\Models\Testimonial;
+use App\Models\Faq;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -30,10 +32,25 @@ class FrontendController extends Controller
             ->limit(8)
             ->get();
 
+        // Get active testimonials (featured first)
+        $testimonials = Testimonial::active()
+            ->orderBy('is_featured', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->limit(6)
+            ->get();
+
+        // Get active FAQs ordered by order field
+        $faqs = Faq::active()
+            ->orderBy('order', 'asc')
+            ->limit(10)
+            ->get();
+
         return Inertia::render('Frontend/Home', [
             'blogs' => $blogs,
             'portfolios' => $portfolios,
             'clients' => $clients,
+            'testimonials' => $testimonials,
+            'faqs' => $faqs,
         ]);
     }
 
@@ -127,9 +144,9 @@ class FrontendController extends Controller
 
     public function clients()
     {
-        $clients = Client::where('status', 'active')
+        $clients = Client::where('status', true)
             ->latest()
-            ->paginate(16);
+            ->paginate(6);
 
         return Inertia::render('Frontend/Clients/Index', [
             'clients' => $clients,
@@ -138,9 +155,9 @@ class FrontendController extends Controller
 
     public function careers()
     {
-        $careers = Career::where('status', 'active')
+        $careers = Career::where('status', true)
             ->latest()
-            ->paginate(10);
+            ->paginate(6);
 
         return Inertia::render('Frontend/Careers/Index', [
             'careers' => $careers,
@@ -149,7 +166,7 @@ class FrontendController extends Controller
 
     public function careerShow($id)
     {
-        $career = Career::where('status', 'active')
+        $career = Career::where('status', true)
             ->findOrFail($id);
 
         return Inertia::render('Frontend/Careers/Show', [

@@ -15,7 +15,7 @@ class ClientController extends Controller
 
         // Search functionality
         if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%')
+            $query->where('client_name', 'like', '%' . $request->search . '%')
                   ->orWhere('industry', 'like', '%' . $request->search . '%');
         }
 
@@ -44,17 +44,12 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'industry' => 'nullable|string|max:100',
+            'client_name' => 'required|string|max:255',
             'logo' => 'nullable|url',
-            'website' => 'nullable|url',
-            'location' => 'nullable|string|max:255',
-            'collaboration_since' => 'nullable|date',
-            'project_count' => 'nullable|integer|min:0',
-            'services' => 'nullable|string',
             'testimonial' => 'nullable|string',
-            'featured' => 'boolean',
+            'status' => 'boolean',
+            'industry' => 'nullable|string|max:100',
+            'website' => 'nullable|url',
         ]);
 
         Client::create($validated);
@@ -80,17 +75,12 @@ class ClientController extends Controller
     public function update(Request $request, Client $client)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'industry' => 'nullable|string|max:100',
+            'client_name' => 'required|string|max:255',
             'logo' => 'nullable|url',
-            'website' => 'nullable|url',
-            'location' => 'nullable|string|max:255',
-            'collaboration_since' => 'nullable|date',
-            'project_count' => 'nullable|integer|min:0',
-            'services' => 'nullable|string',
             'testimonial' => 'nullable|string',
-            'featured' => 'boolean',
+            'status' => 'boolean',
+            'industry' => 'nullable|string|max:100',
+            'website' => 'nullable|url',
         ]);
 
         $client->update($validated);

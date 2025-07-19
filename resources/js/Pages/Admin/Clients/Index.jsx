@@ -103,9 +103,6 @@ export default function ClientIndex({ auth, clients, filters }) {
                                                     Industry
                                                 </th>
                                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Contact
-                                                </th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Status
                                                 </th>
                                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -125,30 +122,22 @@ export default function ClientIndex({ auth, clients, filters }) {
                                                                     alt=""
                                                                 />
                                                             )}
-                                                            <div>
-                                                                <div className="text-sm font-medium text-gray-900">
-                                                                    {client.name}
-                                                                </div>
-                                                                <div className="text-sm text-gray-500">
-                                                                    {client.company}
-                                                                </div>
+                                                            <div className="text-sm font-medium text-gray-900">
+                                                                {client.client_name}
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                         {client.industry}
                                                     </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                        <div>{client.email}</div>
-                                                        <div className="text-gray-500">{client.phone}</div>
-                                                    </td>
+                                                    {/* No Contact info */}
                                                     <td className="px-6 py-4 whitespace-nowrap">
                                                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                                            client.is_active
+                                                            client.status
                                                                 ? 'bg-green-100 text-green-800'
                                                                 : 'bg-red-100 text-red-800'
                                                         }`}>
-                                                            {client.is_active ? 'Active' : 'Inactive'}
+                                                            {client.status ? 'Active' : 'Inactive'}
                                                         </span>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
@@ -164,12 +153,12 @@ export default function ClientIndex({ auth, clients, filters }) {
                                                         >
                                                             Edit
                                                         </Link>
-                                                        <button
-                                                            onClick={() => handleDelete(client.id, client.name)}
-                                                            className="text-red-600 hover:text-red-900"
-                                                        >
-                                                            Delete
-                                                        </button>
+                                                            <button
+                                                                onClick={() => handleDelete(client.id, client.client_name)}
+                                                                className="text-red-600 hover:text-red-900"
+                                                            >
+                                                                Delete
+                                                            </button>
                                                     </td>
                                                 </tr>
                                             ))}

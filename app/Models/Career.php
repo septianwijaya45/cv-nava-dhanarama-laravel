@@ -13,7 +13,11 @@ class Career extends Model
         'position',
         'description',
         'qualification',
+        'status',
+        'is_active',
         'location',
+        'department',
+        'type',
         'posted_at',
         'deadline'
     ];

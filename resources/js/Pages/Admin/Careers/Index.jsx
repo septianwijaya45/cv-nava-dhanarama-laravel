@@ -130,7 +130,7 @@ export default function CareerIndex({ auth, careers, filters }) {
                                                     <td className="px-6 py-4 whitespace-nowrap">
                                                         <div>
                                                             <div className="text-sm font-medium text-gray-900">
-                                                                {career.title}
+                                                                {career.position}
                                                             </div>
                                                             <div className="text-sm text-gray-500">
                                                                 {career.location}
@@ -142,7 +142,7 @@ export default function CareerIndex({ auth, careers, filters }) {
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
                                                         <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
-                                                            {career.employment_type}
+                                                            {career.type}
                                                         </span>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">

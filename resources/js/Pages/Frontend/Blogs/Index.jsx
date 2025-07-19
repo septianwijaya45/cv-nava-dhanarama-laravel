@@ -17,7 +17,10 @@ export default function BlogsIndex({ blogs, categories, filters }) {
     };
 
     return (
-        <FrontendLayout title="Blog & Articles - NAVA DHANARAMA INDONESIA">
+        <FrontendLayout
+            title="Blog & Articles - NAVA DHANARAMA INDONESIA"
+            metaDescription="Blog sistem informasi, otomasi bisnis, website development, dan mobile app development Nava Dhanarama Indonesia."
+            >
             {/* Header */}
             <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -77,128 +77,29 @@ class AnalyticsController extends Controller
 
     public function websiteAnalytics()
     {
-        // Overview statistics
-        $totalBlogs = Blogger::count();
-        $totalPortfolios = Portfolio::count();
-        $totalClients = Client::count();
-        $totalCareers = Career::count();
-        $totalApplications = ApplicationRequest::count();
-        $totalMessages = Message::count();
+        // Ambil data dari tabel web_analytics
+        $rawAnalytics = \DB::table('web_analytics')
+            ->select('url', 'ip_address', 'viewed_at')
+            ->get();
 
-        // Recent activity counts
-        $recentStats = [
-            'blogs_this_month' => Blogger::where('created_at', '>=', Carbon::now()->startOfMonth())->count(),
-            'portfolios_this_month' => Portfolio::where('created_at', '>=', Carbon::now()->startOfMonth())->count(),
-            'applications_this_month' => ApplicationRequest::where('created_at', '>=', Carbon::now()->startOfMonth())->count(),
-            'messages_this_month' => Message::where('created_at', '>=', Carbon::now()->startOfMonth())->count(),
-        ];
-
-        // Application status distribution
-        $applicationStats = ApplicationRequest::selectRaw('status, COUNT(*) as count')
-            ->groupBy('status')
-            ->pluck('count', 'status');
-
-        // Portfolio category distribution
-        $portfolioCategories = Portfolio::selectRaw('category, COUNT(*) as count')
-            ->groupBy('category')
-            ->pluck('count', 'category');
-
-        // Client industry distribution
-        $clientIndustries = Client::selectRaw('industry, COUNT(*) as count')
-            ->whereNotNull('industry')
-            ->groupBy('industry')
-            ->pluck('count', 'industry');
-
-        // Monthly growth data
-        $monthlyGrowth = [];
-        for ($i = 11; $i >= 0; $i--) {
-            $date = Carbon::now()->subMonths($i);
-            $monthlyGrowth[] = [
-                'month' => $date->format('M Y'),
-                'blogs' => Blogger::whereYear('created_at', $date->year)
-                    ->whereMonth('created_at', $date->month)
-                    ->count(),
-                'portfolios' => Portfolio::whereYear('created_at', $date->year)
-                    ->whereMonth('created_at', $date->month)
-                    ->count(),
-                'applications' => ApplicationRequest::whereYear('created_at', $date->year)
-                    ->whereMonth('created_at', $date->month)
-                    ->count(),
-            ];
-        }
-
-        // Recent activities
-        $recentActivities = collect([
-            ...Blogger::latest()->take(3)->get()->map(function ($blog) {
+        // Kelompokkan berdasarkan URL
+        $grouped = collect($rawAnalytics)
+            ->groupBy('url')
+            ->map(function ($items, $url) {
+                $views = $items->count();
+                $uniqueIps = $items->pluck('ip_address')->unique()->count();
+                $lastViewed = $items->max('viewed_at');
                 return [
-                    'type' => 'blog',
-                    'title' => $blog->title,
-                    'date' => $blog->created_at,
-                    'status' => ucfirst($blog->status)
+                    'url' => $url,
+                    'views' => $views,
+                    'uniqueIps' => $uniqueIps,
+                    'lastViewed' => $lastViewed ? Carbon::parse($lastViewed)->format('Y-m-d H:i:s') : null,
                 ];
-            }),
-            ...Portfolio::latest()->take(3)->get()->map(function ($portfolio) {
-                return [
-                    'type' => 'portfolio',
-                    'title' => $portfolio->title,
-                    'date' => $portfolio->created_at,
-                    'status' => ucfirst($portfolio->status ?? 'active')
-                ];
-            }),
-            ...ApplicationRequest::latest()->take(3)->get()->map(function ($app) {
-                return [
-                    'type' => 'application',
-                    'title' => $app->name . ' - ' . $app->position,
-                    'date' => $app->created_at,
-                    'status' => ucfirst($app->status)
-                ];
-            }),
-        ])->sortByDesc('date')->take(10)->values();
-
-        // Unread messages count
-        $unreadMessages = Message::where('is_read', false)->count();
-        $pendingApplications = ApplicationRequest::where('status', 'pending')->count();
+            })->values();
 
         return Inertia::render('Admin/Analytics/Website', [
             'analytics' => [
-                'overview' => [
-                    'totalBlogs' => $totalBlogs,
-                    'totalPortfolios' => $totalPortfolios,
-                    'totalClients' => $totalClients,
-                    'activeCareers' => $totalCareers,
-                    'totalApplications' => $totalApplications,
-                    'totalMessages' => $totalMessages,
-                    'unreadMessages' => $unreadMessages
-                ],
-                'growthData' => [
-                    'blogsThisMonth' => $recentStats['blogs_this_month'],
-                    'portfoliosThisMonth' => $recentStats['portfolios_this_month'],
-                    'clientsThisMonth' => 0, // Add this if you have client creation tracking
-                    'blogGrowth' => $totalBlogs > 0 ? round(($recentStats['blogs_this_month'] / $totalBlogs) * 100, 1) : 0,
-                    'portfolioGrowth' => $totalPortfolios > 0 ? round(($recentStats['portfolios_this_month'] / $totalPortfolios) * 100, 1) : 0,
-                    'clientGrowth' => 0
-                ],
-                'contentStats' => [
-                    'portfolioCategories' => $portfolioCategories,
-                    'clientIndustries' => $clientIndustries,
-                    'applicationStats' => $applicationStats
-                ],
-                'monthlyStats' => collect($monthlyGrowth)->map(function ($month) {
-                    return [
-                        'period' => $month['month'],
-                        'blogs' => $month['blogs'],
-                        'portfolios' => $month['portfolios'],
-                        'clients' => 0, // Add client tracking if needed
-                        'applications' => $month['applications']
-                    ];
-                }),
-                'recentActivity' => $recentActivities->map(function ($activity) {
-                    return [
-                        'type' => $activity['type'],
-                        'description' => "New {$activity['type']}: {$activity['title']} ({$activity['status']})",
-                        'time' => $activity['date']->diffForHumans()
-                    ];
-                })
+                'webAnalytics' => $grouped
             ]
         ]);
     }

@@ -75,6 +75,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::delete('applications/{application}', [App\Http\Controllers\Admin\ApplicationController::class, 'destroy'])->name('applications.destroy');
     Route::patch('applications/{application}/status', [App\Http\Controllers\Admin\ApplicationController::class, 'updateStatus'])->name('applications.update-status');
 
+    // Testimonials Management
+    Route::resource('testimonials', App\Http\Controllers\Admin\TestimonialController::class);
+
+    // FAQs Management
+    Route::resource('faqs', App\Http\Controllers\Admin\FaqController::class);
+    Route::put('faqs/{faq}/reorder', [App\Http\Controllers\Admin\FaqController::class, 'reorder'])->name('faqs.reorder');
+
     // Analytics
     Route::get('analytics/blog', [App\Http\Controllers\Admin\AnalyticsController::class, 'blogAnalytics'])->name('analytics.blog');
     Route::get('analytics/website', [App\Http\Controllers\Admin\AnalyticsController::class, 'websiteAnalytics'])->name('analytics.website');

@@ -3,7 +3,10 @@ import { Link } from '@inertiajs/react';
 
 export default function PortfolioShow({ portfolio, relatedPortfolios }) {
     return (
-        <FrontendLayout title={`${portfolio.title} - Portfolio - NAVA DHANARAMA INDONESIA`}>
+        <FrontendLayout
+            title={`${portfolio.title} - Portfolio - NAVA DHANARAMA INDONESIA`}
+            metaDescription={`Temukan detail proyek ${portfolio.title} dan bagaimana kami membantu klien mencapai tujuan mereka dengan solusi digital inovatif.`}
+            >
             {/* Hero Section */}
             <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

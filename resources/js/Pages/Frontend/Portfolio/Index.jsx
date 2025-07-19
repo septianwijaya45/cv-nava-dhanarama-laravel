@@ -12,7 +12,10 @@ export default function PortfolioIndex({ portfolios, categories }) {
         : portfolios.data;
 
     return (
-        <FrontendLayout title="Portfolio - NAVA DHANARAMA INDONESIA">
+        <FrontendLayout
+            title="Portfolio - NAVA DHANARAMA INDONESIA"
+            metaDescription='Temukan portofolio proyek kami yang mencakup berbagai industri dan teknologi. Lihat bagaimana kami membantu klien mencapai tujuan mereka dengan solusi digital inovatif.'
+            >
             {/* Header */}
             <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -3,17 +3,15 @@ import { Head, useForm } from '@inertiajs/react';
 
 export default function CreateCareer({ auth }) {
     const { data, setData, post, processing, errors } = useForm({
-        title: '',
+        position: '',
         description: '',
-        requirements: '',
-        responsibilities: '',
+        qualification: '',
         department: '',
-        employment_type: 'Full-time',
-        location: '',
-        salary_range: '',
-        experience_level: '',
-        skills_required: '',
+        type: 'full-time',
+        location: 'onsite',
+        posted_at: '',
         deadline: '',
+        status: true,
         is_active: true
     });
 
@@ -39,15 +37,15 @@ export default function CreateCareer({ auth }) {
                         <div className="p-6">
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Job Title</label>
+                                    <label className="block text-sm font-medium text-gray-700">Position</label>
                                     <input
                                         type="text"
-                                        value={data.title}
-                                        onChange={(e) => setData('title', e.target.value)}
+                                        value={data.position}
+                                        onChange={(e) => setData('position', e.target.value)}
                                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500"
                                         required
                                     />
-                                    {errors.title && <p className="mt-2 text-sm text-red-600">{errors.title}</p>}
+                                    {errors.position && <p className="mt-2 text-sm text-red-600">{errors.position}</p>}
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -151,15 +149,15 @@ export default function CreateCareer({ auth }) {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700">Key Responsibilities</label>
+                                    <label className="block text-sm font-medium text-gray-700">Key qualification</label>
                                     <textarea
-                                        value={data.responsibilities}
-                                        onChange={(e) => setData('responsibilities', e.target.value)}
+                                        value={data.qualification}
+                                        onChange={(e) => setData('qualification', e.target.value)}
                                         rows={4}
                                         placeholder="• Responsibility 1&#10;• Responsibility 2&#10;• Responsibility 3"
                                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500"
                                     />
-                                    {errors.responsibilities && <p className="mt-2 text-sm text-red-600">{errors.responsibilities}</p>}
+                                    {errors.qualification && <p className="mt-2 text-sm text-red-600">{errors.qualification}</p>}
                                 </div>
 
                                 <div>

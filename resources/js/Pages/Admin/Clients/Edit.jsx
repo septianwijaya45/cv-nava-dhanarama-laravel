@@ -4,18 +4,13 @@ import AdminLayout from '@/Layouts/AdminLayout';
 import { PhotoIcon } from '@heroicons/react/24/outline';
 
 export default function Edit({ client }) {
-    const { data, setData, put, processing, errors, reset } = useForm({
-        name: client.name || '',
-        description: client.description || '',
-        industry: client.industry || '',
+    const { data, setData, put, processing, errors } = useForm({
+        client_name: client.client_name || '',
         logo: client.logo || '',
-        website: client.website || '',
-        location: client.location || '',
-        collaboration_since: client.collaboration_since || '',
-        project_count: client.project_count || 0,
-        services: client.services || '',
         testimonial: client.testimonial || '',
-        featured: client.featured || false,
+        status: client.status,
+        industry: client.industry || '',
+        website: client.website || '',
     });
 
     const [logoPreview, setLogoPreview] = useState(client.logo || null);
@@ -52,58 +47,33 @@ export default function Edit({ client }) {
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                                     <div>
-                                        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                                            Company Name *
+                                        <label htmlFor="client_name" className="block text-sm font-medium text-gray-700">
+                                            Client Name *
                                         </label>
                                         <input
                                             type="text"
-                                            id="name"
-                                            value={data.name}
-                                            onChange={(e) => setData('name', e.target.value)}
+                                            id="client_name"
+                                            value={data.client_name}
+                                            onChange={(e) => setData('client_name', e.target.value)}
                                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                                             required
                                         />
-                                        {errors.name && <p className="mt-2 text-sm text-red-600">{errors.name}</p>}
+                                        {errors.client_name && <p className="mt-2 text-sm text-red-600">{errors.client_name}</p>}
                                     </div>
 
                                     <div>
                                         <label htmlFor="industry" className="block text-sm font-medium text-gray-700">
                                             Industry
                                         </label>
-                                        <select
+                                        <input
+                                            type="text"
                                             id="industry"
                                             value={data.industry}
                                             onChange={(e) => setData('industry', e.target.value)}
                                             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                        >
-                                            <option value="">Select Industry</option>
-                                            <option value="Technology">Technology</option>
-                                            <option value="Healthcare">Healthcare</option>
-                                            <option value="Finance">Finance</option>
-                                            <option value="Education">Education</option>
-                                            <option value="E-commerce">E-commerce</option>
-                                            <option value="Manufacturing">Manufacturing</option>
-                                            <option value="Government">Government</option>
-                                            <option value="Non-profit">Non-profit</option>
-                                            <option value="Other">Other</option>
-                                        </select>
+                                        />
                                         {errors.industry && <p className="mt-2 text-sm text-red-600">{errors.industry}</p>}
                                     </div>
-                                </div>
-
-                                <div>
-                                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                                        Company Description
-                                    </label>
-                                    <textarea
-                                        id="description"
-                                        rows={3}
-                                        value={data.description}
-                                        onChange={(e) => setData('description', e.target.value)}
-                                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                        placeholder="Brief description of the company and their business..."
-                                    />
-                                    {errors.description && <p className="mt-2 text-sm text-red-600">{errors.description}</p>}
                                 </div>
 
                                 <div>
@@ -114,101 +84,35 @@ export default function Edit({ client }) {
                                         type="url"
                                         id="logo"
                                         value={data.logo}
-                                        onChange={handleLogoChange}
+                                        onChange={(e) => { setData('logo', e.target.value); setLogoPreview(e.target.value); }}
                                         className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                                         placeholder="https://example.com/logo.png"
                                     />
                                     {errors.logo && <p className="mt-2 text-sm text-red-600">{errors.logo}</p>}
-
                                     {logoPreview && (
                                         <div className="mt-4">
-                                            <p className="text-sm text-gray-500 mb-2">Logo Preview:</p>
                                             <img
                                                 src={logoPreview}
                                                 alt="Logo Preview"
-                                                className="h-16 w-32 object-contain rounded-lg border border-gray-300 bg-white p-2"
-                                                onError={() => setLogoPreview(null)}
+                                                className="h-16 w-32 object-contain rounded-lg border border-gray-300"
                                             />
                                         </div>
                                     )}
                                 </div>
 
-                                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                                    <div>
-                                        <label htmlFor="website" className="block text-sm font-medium text-gray-700">
-                                            Website URL
-                                        </label>
-                                        <input
-                                            type="url"
-                                            id="website"
-                                            value={data.website}
-                                            onChange={(e) => setData('website', e.target.value)}
-                                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                            placeholder="https://company.com"
-                                        />
-                                        {errors.website && <p className="mt-2 text-sm text-red-600">{errors.website}</p>}
-                                    </div>
-
-                                    <div>
-                                        <label htmlFor="location" className="block text-sm font-medium text-gray-700">
-                                            Location
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="location"
-                                            value={data.location}
-                                            onChange={(e) => setData('location', e.target.value)}
-                                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                            placeholder="City, Country"
-                                        />
-                                        {errors.location && <p className="mt-2 text-sm text-red-600">{errors.location}</p>}
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                                    <div>
-                                        <label htmlFor="collaboration_since" className="block text-sm font-medium text-gray-700">
-                                            Collaboration Since
-                                        </label>
-                                        <input
-                                            type="date"
-                                            id="collaboration_since"
-                                            value={data.collaboration_since}
-                                            onChange={(e) => setData('collaboration_since', e.target.value)}
-                                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                        />
-                                        {errors.collaboration_since && <p className="mt-2 text-sm text-red-600">{errors.collaboration_since}</p>}
-                                    </div>
-
-                                    <div>
-                                        <label htmlFor="project_count" className="block text-sm font-medium text-gray-700">
-                                            Number of Projects
-                                        </label>
-                                        <input
-                                            type="number"
-                                            id="project_count"
-                                            value={data.project_count}
-                                            onChange={(e) => setData('project_count', parseInt(e.target.value) || 0)}
-                                            min="0"
-                                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                        />
-                                        {errors.project_count && <p className="mt-2 text-sm text-red-600">{errors.project_count}</p>}
-                                    </div>
-                                </div>
-
                                 <div>
-                                    <label htmlFor="services" className="block text-sm font-medium text-gray-700">
-                                        Services Provided
+                                    <label htmlFor="website" className="block text-sm font-medium text-gray-700">
+                                        Website URL
                                     </label>
-                                    <textarea
-                                        id="services"
-                                        rows={3}
-                                        value={data.services}
-                                        onChange={(e) => setData('services', e.target.value)}
+                                    <input
+                                        type="url"
+                                        id="website"
+                                        value={data.website}
+                                        onChange={(e) => setData('website', e.target.value)}
                                         className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                        placeholder="List of services provided to this client..."
+                                        placeholder="https://company.com"
                                     />
-                                    {errors.services && <p className="mt-2 text-sm text-red-600">{errors.services}</p>}
+                                    {errors.website && <p className="mt-2 text-sm text-red-600">{errors.website}</p>}
                                 </div>
 
                                 <div>
@@ -217,31 +121,24 @@ export default function Edit({ client }) {
                                     </label>
                                     <textarea
                                         id="testimonial"
-                                        rows={4}
                                         value={data.testimonial}
                                         onChange={(e) => setData('testimonial', e.target.value)}
-                                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                        placeholder="What the client said about working with us..."
+                                        rows={4}
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                                     />
                                     {errors.testimonial && <p className="mt-2 text-sm text-red-600">{errors.testimonial}</p>}
                                 </div>
-
-                                <div className="flex items-center">
-                                    <div className="flex items-center h-5">
+                                <div>
+                                    <label className="flex items-center">
                                         <input
-                                            id="featured"
                                             type="checkbox"
-                                            checked={data.featured}
-                                            onChange={(e) => setData('featured', e.target.checked)}
-                                            className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                                            checked={data.status}
+                                            onChange={(e) => setData('status', e.target.checked)}
+                                            className="rounded border-gray-300 text-brand-600 shadow-sm focus:ring-brand-500"
                                         />
-                                    </div>
-                                    <div className="ml-3 text-sm">
-                                        <label htmlFor="featured" className="font-medium text-gray-700">
-                                            Featured Client
-                                        </label>
-                                        <p className="text-gray-500">Display this client prominently on the website.</p>
-                                    </div>
+                                        <span className="ml-2 text-sm text-gray-700">Active Client</span>
+                                    </label>
+                                    {errors.status && <p className="mt-2 text-sm text-red-600">{errors.status}</p>}
                                 </div>
 
                                 <div className="flex justify-end space-x-3">

@@ -38,15 +38,15 @@ export default function Show({ career }) {
     };
 
     return (
-        <AdminLayout title={`Career: ${career.title}`}>
-            <Head title={`Career: ${career.title}`} />
+        <AdminLayout title={`Career: ${career.position}`}>
+            <Head title={`Career: ${career.position}`} />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div className="flex justify-between items-center mb-6">
-                                <h1 className="text-3xl font-bold text-gray-900">{career.title}</h1>
+                                <h1 className="text-3xl font-bold text-gray-900">{career.position}</h1>
                                 <div className="flex space-x-3">
                                     <Link
                                         href={route('admin.careers.edit', career.id)}

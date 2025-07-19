@@ -4,6 +4,13 @@ import AdminLayout from '@/Layouts/AdminLayout';
 import { PhotoIcon } from '@heroicons/react/24/outline';
 
 export default function Edit({ portfolio }) {
+    // Map legacy boolean status (true/false) to string value for select
+    const initialStatus =
+        typeof portfolio.status === 'string'
+            ? portfolio.status
+            : portfolio.status
+            ? 'completed'
+            : 'planning';
     const { data, setData, put, processing, errors, reset } = useForm({
         title: portfolio.title || '',
         description: portfolio.description || '',
@@ -16,14 +23,21 @@ export default function Edit({ portfolio }) {
         duration: portfolio.duration || '',
         team_size: portfolio.team_size || 1,
         featured: portfolio.featured || false,
-        status: portfolio.status || 'completed',
+        status: portfolio.status,
     });
 
     const [imagePreview, setImagePreview] = useState(portfolio.image || null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route('admin.portfolios.update', portfolio.id));
+        // Submit form data: useForm.put takes options object as second arg
+        put(
+            route('admin.portfolios.update', portfolio.id),
+            data,
+            {
+                onSuccess: () => reset(),
+            }
+        );
     };
 
     const handleImageChange = (e) => {

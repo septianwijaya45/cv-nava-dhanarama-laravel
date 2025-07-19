@@ -1,12 +1,18 @@
 import FrontendLayout from '@/Layouts/FrontendLayout';
 import { Link } from '@inertiajs/react';
 import { useLanguage } from '@/Contexts/LanguageContext';
+import TestimonialsSection from '@/Components/Testimonials/TestimonialsSection';
+import FaqSection from '@/Components/FAQ/FaqSection';
+import TechnologySection from '@/Components/Technology/TechnologySection';
 
-export default function Home({ blogs, portfolios, clients }) {
+export default function Home({ blogs, portfolios, clients, testimonials = [], faqs = [] }) {
     const { t } = useLanguage();
 
     return (
-        <FrontendLayout title="NAVA DHANARAMA INDONESIA - Professional Web Developer">
+        <FrontendLayout
+            title="Nava Dhanarama Indonesia - Jasa Pengembangan Sistem & Otomasi Bisnis Terpercaya"
+            metaDescription="Nava Dhanarama Indonesia menyediakan jasa pengembangan sistem informasi, otomasi bisnis, website development, dan mobile app development untuk transformasi digital bisnis Anda."
+        >
             {/* Hero Section */}
             <section className="min-h-screen bg-gradient-to-br from-brand-50 to-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -14,13 +20,17 @@ export default function Home({ blogs, portfolios, clients }) {
                         {/* Content */}
                         <div>
                             <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
-                                {t('home.hero.title')}
-                                <span className="text-brand-600 block"></span>
-                                <span className="text-secondary-600"></span>
+                                <span className="text-brand-600">Nava Dhanarama</span>
+                                <span className="block text-gray-900">Indonesia</span>
+                                <span className="block text-2xl lg:text-3xl text-secondary-600 font-medium mt-2">
+                                    Jasa Pengembangan Sistem & Otomasi Bisnis
+                                </span>
                             </h1>
 
                             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                                {t('home.hero.description')}
+                                Transformasi digital bisnis Anda dengan solusi sistem informasi custom,
+                                otomasi proses bisnis, website development, dan mobile application yang
+                                profesional dan terpercaya.
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -28,13 +38,13 @@ export default function Home({ blogs, portfolios, clients }) {
                                     href={route('portfolio.index')}
                                     className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-brand-600 hover:bg-brand-700 transition duration-200"
                                 >
-                                    {t('home.hero.portfolio')}
+                                    Lihat Portfolio Kami
                                 </Link>
                                 <Link
                                     href={route('contact')}
                                     className="inline-flex items-center justify-center px-6 py-3 border border-brand-300 text-base font-medium rounded-lg text-brand-700 bg-brand-50 hover:bg-brand-100 transition duration-200"
                                 >
-                                    {t('home.hero.cta')}
+                                    Konsultasi Gratis
                                 </Link>
                             </div>
 
@@ -42,15 +52,15 @@ export default function Home({ blogs, portfolios, clients }) {
                             <div className="grid grid-cols-3 gap-6">
                                 <div className="text-center">
                                     <div className="text-2xl font-bold text-brand-600">{portfolios.length}+</div>
-                                    <div className="text-sm text-gray-600">Projects</div>
+                                    <div className="text-sm text-gray-600">Proyek Selesai</div>
                                 </div>
                                 <div className="text-center">
                                     <div className="text-2xl font-bold text-brand-600">{clients.length}+</div>
-                                    <div className="text-sm text-gray-600">Clients</div>
+                                    <div className="text-sm text-gray-600">Klien Puas</div>
                                 </div>
                                 <div className="text-center">
                                     <div className="text-2xl font-bold text-brand-600">5+</div>
-                                    <div className="text-sm text-gray-600">Years</div>
+                                    <div className="text-sm text-gray-600">Tahun Pengalaman</div>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +71,7 @@ export default function Home({ blogs, portfolios, clients }) {
                                 <div className="absolute inset-0 bg-brand-600/10 rounded-full blur-3xl"></div>
                                 <img
                                     src="/nava3d.png"
-                                    alt="NAVA DHANARAMA INDONESIA Logo"
+                                    alt="Nava Dhanarama Indonesia - Jasa Pengembangan Sistem dan Otomasi Bisnis Professional"
                                     className="relative mx-auto h-80 w-auto drop-shadow-2xl"
                                 />
                             </div>
@@ -299,27 +309,37 @@ export default function Home({ blogs, portfolios, clients }) {
                 </section>
             )}
 
+            {/* Technology Section */}
+            <TechnologySection />
+
+            {/* Testimonials Section */}
+            <TestimonialsSection testimonials={testimonials} />
+
+            {/* FAQ Section */}
+            <FaqSection faqs={faqs} title="Frequently Asked Questions" />
+
             {/* CTA Section */}
             <section className="py-20 bg-brand-600">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-                        Ready to Start Your Project?
+                        Siap Transformasi Digital Bisnis Anda?
                     </h2>
                     <p className="text-xl text-brand-100 mb-8 max-w-3xl mx-auto">
-                        Let's discuss how I can help bring your ideas to life with cutting-edge technology and creative solutions.
+                        Mari diskusikan bagaimana kami dapat membantu mewujudkan ide Anda dengan
+                        teknologi terdepan dan solusi kreatif yang tepat sasaran.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link
                             href={route('contact')}
                             className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-brand-600 bg-white hover:bg-gray-50 transition duration-200"
                         >
-                            Get Quote
+                            Minta Penawaran
                         </Link>
                         <Link
                             href={route('careers.index')}
                             className="inline-flex items-center px-8 py-4 border-2 border-white text-lg font-medium rounded-lg text-white hover:bg-white hover:text-brand-600 transition duration-200"
                         >
-                            View Careers
+                            Lihat Karir
                         </Link>
                     </div>
                 </div>

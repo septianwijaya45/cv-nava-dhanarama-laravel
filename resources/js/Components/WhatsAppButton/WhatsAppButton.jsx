@@ -1,37 +1,29 @@
 import React, { useState } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
-import { PromptModal } from '@/Components/Modal/CustomModal';
+import ContactModal from '@/Components/Modal/ContactModal.jsx';
 
 const WhatsAppButton = () => {
-    const [showNameModal, setShowNameModal] = useState(false);
-    const [showEmailModal, setShowEmailModal] = useState(false);
-    const [userInfo, setUserInfo] = useState({ name: '', email: '' });
+    const [showContactModal, setShowContactModal] = useState(false);
 
     const handleWhatsAppClick = () => {
-        setShowNameModal(true);
+        setShowContactModal(true);
     };
 
-    const handleNameSubmit = (name) => {
-        setUserInfo(prev => ({ ...prev, name: name || 'Visitor' }));
-        setShowNameModal(false);
-        setShowEmailModal(true);
-    };
-
-    const handleEmailSubmit = (email) => {
-        const finalEmail = email || 'email@example.com';
-        const finalName = userInfo.name || 'Visitor';
-        setUserInfo(prev => ({ ...prev, email: finalEmail }));
-        setShowEmailModal(false);
+    const handleContactSubmit = (contactData) => {
+        // Use provided values or defaults
+        const finalName = contactData.name || 'Visitor';
+        const finalEmail = contactData.email || 'email@example.com';
 
         // Create WhatsApp message
         const message = `Halo%2C%20perkenalkan%20saya%20${encodeURIComponent(finalName)}%20(email%3A%20${encodeURIComponent(finalEmail)})%20ingin%20membuat%20aplikasi.%20Bisakah%20saya%20mendapatkan%20informasi%20lebih%20lanjut%3F`;
         const whatsappUrl = `https://wa.me/6285962890502?text=${message}`;
         window.open(whatsappUrl, '_blank');
+        
+        setShowContactModal(false);
     };
 
     const handleModalClose = () => {
-        setShowNameModal(false);
-        setShowEmailModal(false);
+        setShowContactModal(false);
     };
 
     return (
@@ -46,24 +38,11 @@ const WhatsAppButton = () => {
                 </button>
             </div>
 
-            {/* Name Input Modal */}
-            <PromptModal
-                isOpen={showNameModal}
+            <ContactModal
+                isOpen={showContactModal}
                 onClose={handleModalClose}
+                onSubmit={handleContactSubmit}
                 title="Contact Information"
-                placeholder="Enter your name"
-                defaultValue=""
-                onConfirm={handleNameSubmit}
-            />
-
-            {/* Email Input Modal */}
-            <PromptModal
-                isOpen={showEmailModal}
-                onClose={handleModalClose}
-                title="Email Address"
-                placeholder="Enter your email address"
-                defaultValue=""
-                onConfirm={handleEmailSubmit}
             />
         </>
     );

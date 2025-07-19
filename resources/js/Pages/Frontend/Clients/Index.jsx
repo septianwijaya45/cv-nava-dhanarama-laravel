@@ -3,7 +3,10 @@ import { Link } from '@inertiajs/react';
 
 export default function ClientsIndex({ clients }) {
     return (
-        <FrontendLayout title="Our Clients - NAVA DHANARAMA INDONESIA">
+        <FrontendLayout
+            title="Our Clients - NAVA DHANARAMA INDONESIA"
+            metaDescription='Temukan klien kami yang telah mempercayakan proyek digital mereka kepada NAVA DHANARAMA INDONESIA. Kami bangga bekerja dengan berbagai industri untuk menciptakan solusi inovatif.'
+            >
             {/* Header */}
             <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,13 +61,13 @@ export default function ClientsIndex({ clients }) {
                                             {client.logo ? (
                                                 <img
                                                     src={client.logo}
-                                                    alt={client.name}
+                                                    alt={client.client_name}
                                                     className="w-full h-48 object-contain p-8 group-hover:scale-105 transition duration-300"
                                                 />
                                             ) : (
                                                 <div className="flex items-center justify-center h-48 bg-gradient-to-br from-brand-50 to-brand-100">
                                                     <div className="text-6xl font-bold text-brand-600">
-                                                        {client.name.charAt(0)}
+                                                        {client.client_name.charAt(0)}
                                                     </div>
                                                 </div>
                                             )}
@@ -73,7 +76,7 @@ export default function ClientsIndex({ clients }) {
                                         {/* Client Info */}
                                         <div className="p-6">
                                             <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-brand-600 transition duration-200">
-                                                {client.name}
+                                                {client.client_name}
                                             </h3>
 
                                             {client.industry && (
@@ -85,9 +88,9 @@ export default function ClientsIndex({ clients }) {
                                                 </div>
                                             )}
 
-                                            {client.description && (
+                                            {client.testimonial && (
                                                 <p className="text-gray-600 mb-4 line-clamp-3">
-                                                    {client.description}
+                                                    {client.testimonial}
                                                 </p>
                                             )}
 
@@ -106,24 +109,6 @@ export default function ClientsIndex({ clients }) {
                                                         >
                                                             Visit Website
                                                         </a>
-                                                    </div>
-                                                )}
-
-                                                {client.project_count && (
-                                                    <div className="flex items-center text-sm text-gray-500">
-                                                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                                                        </svg>
-                                                        {client.project_count} Project{client.project_count !== 1 ? 's' : ''}
-                                                    </div>
-                                                )}
-
-                                                {client.collaboration_since && (
-                                                    <div className="flex items-center text-sm text-gray-500">
-                                                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                                        </svg>
-                                                        Partner since {new Date(client.collaboration_since).getFullYear()}
                                                     </div>
                                                 )}
                                             </div>

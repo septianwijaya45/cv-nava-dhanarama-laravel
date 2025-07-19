@@ -10,11 +10,18 @@ class Portfolio extends Model
     use HasFactory;
 
     protected $fillable = [
-        'project_name',
-        'image',
+        'title',
         'description',
-        'demo_link',
-        'category'
+        'category',
+        'technologies',
+        'image',
+        'demo_url',
+        'github_url',
+        'client',
+        'duration',
+        'team_size',
+        'featured',
+        'status',
     ];
 
     // Scope for filtering by category

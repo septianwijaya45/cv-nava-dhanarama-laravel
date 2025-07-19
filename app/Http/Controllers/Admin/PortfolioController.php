@@ -80,6 +80,7 @@ class PortfolioController extends Controller
 
     public function update(Request $request, Portfolio $portfolio)
     {
+        // dd($request->all());
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',

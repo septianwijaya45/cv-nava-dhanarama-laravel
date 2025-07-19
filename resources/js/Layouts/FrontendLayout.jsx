@@ -4,7 +4,11 @@ import { useLanguage } from '@/Contexts/LanguageContext';
 import LanguageToggle from '@/Components/LanguageToggle';
 import WhatsAppButton from '@/Components/WhatsAppButton/WhatsAppButton';
 
-export default function FrontendLayout({ children, title = "NAVA DHANARAMA INDONESIA" }) {
+export default function FrontendLayout({
+    children,
+    title = "NAVA DHANARAMA INDONESIA",
+    metaDescription = "Nava Dhanarama Indonesia - Spesialis pengembangan sistem informasi, otomasi bisnis, dan solusi digital untuk transformasi bisnis modern."
+}) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const { t } = useLanguage();
 
@@ -19,7 +23,20 @@ export default function FrontendLayout({ children, title = "NAVA DHANARAMA INDON
 
     return (
         <>
-            <Head title={title} />
+            <Head title={title}>
+                <meta name="description" content={metaDescription} />
+                <meta name="keywords" content="pengembangan sistem, otomasi bisnis, website development, mobile app, sistem informasi, digital transformation, Laravel, React, custom software" />
+                <meta name="author" content="Nava Dhanarama Indonesia" />
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={metaDescription} />
+                <meta property="og:type" content="website" />
+                <meta property="og:image" content="/nava3d.png" />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={title} />
+                <meta name="twitter:description" content={metaDescription} />
+                <meta name="robots" content="index, follow" />
+                <link rel="canonical" href={window.location.href} />
+            </Head>
 
             {/* Navigation */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
@@ -127,15 +144,11 @@ export default function FrontendLayout({ children, title = "NAVA DHANARAMA INDON
                                 Creating innovative digital experiences that drive business growth.
                             </p>
                             <div className="flex space-x-4">
-                                <a href="#" className="text-gray-400 hover:text-white">
-                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                                    </svg>
-                                </a>
-                                <a href="#" className="text-gray-400 hover:text-white">
-                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
-                                    </svg>
+                                <a href="https://www.instagram.com/navadhanaramaindonesia/" className=" bg-gray-100 rounded-lg flex items-center justify-center text-gray-600 hover:bg-brand-600  transition duration-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M7.75 2A5.75 5.75 0 0 0 2 7.75v8.5A5.75 5.75 0 0 0 7.75 22h8.5A5.75 5.75 0 0 0 22 16.25v-8.5A5.75 5.75 0 0 0 16.25 2h-8.5ZM4.5 7.75A3.25 3.25 0 0 1 7.75 4.5h8.5a3.25 3.25 0 0 1 3.25 3.25v8.5a3.25 3.25 0 0 1-3.25 3.25h-8.5A3.25 3.25 0 0 1 4.5 16.25v-8.5Zm7.5 1.25a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7Zm0 1.5a2 2 0 1 1 0 4a2 2 0 0 1 0-4Zm5.25-2.75a.75.75 0 1 0 0 1.5a.75.75 0 0 0 0-1.5Z"/>
+                                        </svg>
+
                                 </a>
                                 <a href="#" className="text-gray-400 hover:text-white">
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

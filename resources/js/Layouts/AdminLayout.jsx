@@ -9,7 +9,9 @@ import {
     ChartBarIcon,
     Bars3Icon,
     XMarkIcon,
-    InboxIcon
+    InboxIcon,
+    ChatBubbleLeftRightIcon,
+    QuestionMarkCircleIcon
 } from '@heroicons/react/24/outline';
 
 const navigation = [
@@ -19,6 +21,8 @@ const navigation = [
     { name: 'Clients', href: '/admin/clients', icon: UserGroupIcon },
     { name: 'Careers', href: '/admin/careers', icon: BookOpenIcon },
     { name: 'Applications', href: '/admin/applications', icon: InboxIcon },
+    { name: 'Testimonials', href: '/admin/testimonials', icon: ChatBubbleLeftRightIcon },
+    { name: 'FAQs', href: '/admin/faqs', icon: QuestionMarkCircleIcon },
     { name: 'Analytics Blog', href: '/admin/analytics/blog', icon: ChartBarIcon },
     { name: 'Analytics Website', href: '/admin/analytics/website', icon: ChartBarIcon },
 ];

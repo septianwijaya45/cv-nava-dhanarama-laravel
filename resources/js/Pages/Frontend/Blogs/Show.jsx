@@ -18,7 +18,10 @@ export default function BlogShow({ blog, relatedBlogs = [] }) {
     };
 
     return (
-        <FrontendLayout title={`${blog.title} - Blog - NAVA DHANARAMA INDONESIA`}>
+        <FrontendLayout
+            title={`${blog.title} - Blog - NAVA DHANARAMA INDONESIA`}
+            metaDescription={`${blog.title} - Blog - NAVA DHANARAMA INDONESIA`}
+        >
             {/* Blog Header */}
             <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

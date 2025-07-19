@@ -3,7 +3,10 @@ import { Link } from '@inertiajs/react';
 
 export default function CareerShow({ career, relatedCareers = [] }) {
     return (
-        <FrontendLayout title={`${career.title} - Careers - NAVA DHANARAMA INDONESIA`}>
+        <FrontendLayout
+            title={`${career.title} - Careers - NAVA DHANARAMA INDONESIA`}
+            metaDescription={`Bergabunglah dengan tim kami sebagai ${career.title} di NAVA DHANARAMA INDONESIA. Jelajahi peran, persyaratan, dan manfaat bekerja bersama kami.`}
+            >
             {/* Career Header */}
             <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

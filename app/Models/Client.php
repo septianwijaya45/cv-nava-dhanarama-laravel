@@ -13,6 +13,8 @@ class Client extends Model
         'client_name',
         'logo',
         'testimonial',
+        'status',
+        'industry',
         'website'
     ];
 
