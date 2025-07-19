@@ -1,6 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, useForm } from '@inertiajs/react';
 import { useState } from 'react';
+import { router } from '@inertiajs/react';
 
 export default function EditBlog({ auth, blog }) {
     const formatDateTimeLocal = (dateTime) => {
@@ -24,28 +25,30 @@ export default function EditBlog({ auth, blog }) {
         blog.cover_image ? `/storage/${blog.cover_image}` : ''
     );
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
 
-        if (data.cover_image instanceof File) {
-            // If there's a file upload, use POST with _method spoofing
-            const formData = {
-                ...data,
-                _method: 'PUT'
-            };
-            post(route('admin.blogs.update', blog.id), formData, {
-                forceFormData: true,
-                preserveScroll: true,
-            });
-        } else {
-            // If no file upload, use regular PUT
-            const updateData = { ...data };
-            delete updateData.cover_image; // Remove null cover_image
-            put(route('admin.blogs.update', blog.id), updateData, {
-                preserveScroll: true,
-            });
-        }
-    };
+const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('content', data.content);
+    formData.append('category', data.category);
+    formData.append('status', data.status);
+    formData.append('published_at', data.published_at || '');
+    formData.append('_method', 'PUT');
+
+    if (data.cover_image) {
+        formData.append('cover_image', data.cover_image);
+    }
+
+    router.post(route('admin.blogs.update', blog.id), formData, {
+        forceFormData: true,
+        preserveScroll: true,
+        onError: (errors) => {
+            console.log('Validation Errors:', errors);
+        },
+    });
+};
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
