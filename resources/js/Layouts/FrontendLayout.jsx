@@ -99,13 +99,6 @@ export default function FrontendLayout({
                                 <div className="pt-2 border-t border-gray-200">
                                     <LanguageToggle />
                                 </div>
-                                <Link
-                                    href={route('login')}
-                                    className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-brand-600 hover:bg-brand-700 transition duration-200"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                >
-                                    Admin Login
-                                </Link>
                             </div>
                         </div>
                     )}

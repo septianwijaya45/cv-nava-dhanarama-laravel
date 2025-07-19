@@ -22,24 +22,6 @@ export default function Welcome({ auth }) {
                             </div>
                         </div>
 
-                        {/* Navigation Links */}
-                        <div className="flex items-center space-x-4">
-                            {auth.user ? (
-                                <Link
-                                    href={route('admin.dashboard')}
-                                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-brand-600 hover:bg-brand-700 transition duration-200"
-                                >
-                                    Admin Dashboard
-                                </Link>
-                            ) : (
-                                <Link
-                                    href={route('login')}
-                                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-brand-600 hover:bg-brand-700 transition duration-200"
-                                >
-                                    Admin Login
-                                </Link>
-                            )}
-                        </div>
                     </div>
                 </div>
             </nav>
