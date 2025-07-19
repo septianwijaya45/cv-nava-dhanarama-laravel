@@ -7,7 +7,7 @@ import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 
 export default function FaqIndex({ auth, faqs, filters }) {
     const [search, setSearch] = useState(filters?.search || '');
-    const { customConfirm, modalState, setModalState } = useCustomModals();
+    const { customConfirm, ConfirmComponent } = useCustomModals();
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -15,12 +15,13 @@ export default function FaqIndex({ auth, faqs, filters }) {
     };
 
     const handleDelete = async (id, question) => {
-        const confirmed = await customConfirm(
-            `Are you sure you want to delete this FAQ?`,
-            `Question: "${question.substring(0, 50)}..."`,
-            'Delete FAQ'
-        );
-
+        const confirmed = await customConfirm({
+            title: 'Delete FAQ',
+            message: `Are you sure you want to delete this FAQ?`,
+            confirmText: 'Delete',
+            cancelText: 'Cancel',
+            type: 'danger'
+        });
         if (confirmed) {
             router.delete(route('admin.faqs.destroy', id));
         }
@@ -194,10 +195,7 @@ export default function FaqIndex({ auth, faqs, filters }) {
                 </div>
             </div>
 
-            <CustomModal
-                modalState={modalState}
-                setModalState={setModalState}
-            />
+            <ConfirmComponent />
         </AdminLayout>
     );
 }

@@ -7,7 +7,7 @@ import CustomModal from '@/Components/Modal/CustomModal.jsx';
 export default function ClientIndex({ auth, clients, filters }) {
     const [search, setSearch] = useState(filters.search || '');
     const [industry, setIndustry] = useState(filters.industry || '');
-    const { customConfirm, modalState, setModalState } = useCustomModals();
+        const { customConfirm, ConfirmComponent } = useCustomModals();
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -15,11 +15,13 @@ export default function ClientIndex({ auth, clients, filters }) {
     };
 
     const handleDelete = async (id, name) => {
-        const confirmed = await customConfirm(
-            `Are you sure you want to delete client "${name}"?`,
-            'This action cannot be undone.',
-            'Delete Client'
-        );
+        const confirmed = await customConfirm({
+            title: 'Delete Client',
+            message: `Are you sure you want to delete client "${name}"? This action cannot be undone.`,
+            confirmText: 'Delete',
+            cancelText: 'Cancel',
+            type: 'danger'
+        });
 
         if (confirmed) {
             router.delete(route('admin.clients.destroy', id));
@@ -170,10 +172,7 @@ export default function ClientIndex({ auth, clients, filters }) {
                     </div>
                 </div>
             </div>
-            <CustomModal
-                modalState={modalState}
-                setModalState={setModalState}
-            />
+            <ConfirmComponent />
         </AdminLayout>
     );
 }

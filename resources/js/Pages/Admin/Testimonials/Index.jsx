@@ -1,13 +1,12 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import { useState } from 'react';
-import useCustomModals from '@/hooks/useCustomModals.jsx';
-import CustomModal from '@/Components/Modal/CustomModal.jsx';
+import { useCustomModals } from '@/hooks/useCustomModals.jsx';
 import { StarIcon } from '@heroicons/react/24/solid';
 
 export default function TestimonialIndex({ auth, testimonials, filters }) {
     const [search, setSearch] = useState(filters?.search || '');
-    const { customConfirm, modalState, setModalState } = useCustomModals();
+    const { customConfirm, ConfirmComponent } = useCustomModals();
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -15,11 +14,13 @@ export default function TestimonialIndex({ auth, testimonials, filters }) {
     };
 
     const handleDelete = async (id, clientName) => {
-        const confirmed = await customConfirm(
-            `Are you sure you want to delete testimonial from "${clientName}"?`,
-            'This action cannot be undone.',
-            'Delete Testimonial'
-        );
+        const confirmed = await customConfirm({
+            title: 'Delete Testimonial',
+            message: `Are you sure you want to delete testimonial from "${clientName}"? This action cannot be undone.`,
+            confirmText: 'Delete',
+            cancelText: 'Cancel',
+            type: 'danger'
+        });
 
         if (confirmed) {
             router.delete(route('admin.testimonials.destroy', id));
@@ -187,10 +188,7 @@ export default function TestimonialIndex({ auth, testimonials, filters }) {
                 </div>
             </div>
 
-            <CustomModal
-                modalState={modalState}
-                setModalState={setModalState}
-            />
+            <ConfirmComponent />
         </AdminLayout>
     );
 }

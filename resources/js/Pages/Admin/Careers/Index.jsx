@@ -7,7 +7,7 @@ import CustomModal from '@/Components/Modal/CustomModal.jsx';
 export default function CareerIndex({ auth, careers, filters }) {
     const [search, setSearch] = useState(filters.search || '');
     const [department, setDepartment] = useState(filters.department || '');
-    const { customConfirm, modalState, setModalState } = useCustomModals();
+        const { customConfirm, ConfirmComponent } = useCustomModals();
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -15,11 +15,13 @@ export default function CareerIndex({ auth, careers, filters }) {
     };
 
     const handleDelete = async (id, title) => {
-        const confirmed = await customConfirm(
-            `Are you sure you want to delete job posting "${title}"?`,
-            'This action cannot be undone.',
-            'Delete Job Posting'
-        );
+        const confirmed = await customConfirm({
+            title: 'Delete Career',
+            message: `Are you sure you want to delete career "${title}"? This action cannot be undone.`,
+            confirmText: 'Delete',
+            cancelText: 'Cancel',
+            type: 'danger'
+        });
 
         if (confirmed) {
             router.delete(route('admin.careers.destroy', id));
@@ -179,7 +181,7 @@ export default function CareerIndex({ auth, careers, filters }) {
                                                             Edit
                                                         </Link>
                                                         <button
-                                                            onClick={() => handleDelete(career.id, career.title)}
+                                                            onClick={() => handleDelete(career.id, career.position)}
                                                             className="text-red-600 hover:text-red-900"
                                                         >
                                                             Delete
@@ -195,10 +197,7 @@ export default function CareerIndex({ auth, careers, filters }) {
                     </div>
                 </div>
             </div>
-            <CustomModal
-                modalState={modalState}
-                setModalState={setModalState}
-            />
+            <ConfirmComponent />
         </AdminLayout>
     );
 }

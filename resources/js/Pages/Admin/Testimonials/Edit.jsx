@@ -12,8 +12,8 @@ export default function TestimonialEdit({ auth, testimonial }) {
         testimonial_text: testimonial.testimonial_text || '',
         client_photo: null,
         rating: testimonial.rating || 5,
-        is_featured: testimonial.is_featured || false,
-        is_active: testimonial.is_active || true,
+        is_featured: testimonial.is_featured ? true : false,
+        is_active: testimonial.is_active ? true : false,
     });
 
     const [imagePreview, setImagePreview] = useState(null);
@@ -41,7 +41,7 @@ export default function TestimonialEdit({ auth, testimonial }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         put(route('admin.testimonials.update', testimonial.id), {
-            forceFormData: true,
+            preserveScroll: true,
         });
     };
 

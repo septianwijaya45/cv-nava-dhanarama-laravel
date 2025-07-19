@@ -7,7 +7,7 @@ import CustomModal from '@/Components/Modal/CustomModal.jsx';
 export default function PortfolioIndex({ auth, portfolios, filters }) {
     const [search, setSearch] = useState(filters.search || '');
     const [category, setCategory] = useState(filters.category || '');
-    const { customConfirm, modalState, setModalState } = useCustomModals();
+        const { customConfirm, ConfirmComponent } = useCustomModals();
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -15,11 +15,13 @@ export default function PortfolioIndex({ auth, portfolios, filters }) {
     };
 
     const handleDelete = async (id, title) => {
-        const confirmed = await customConfirm(
-            `Are you sure you want to delete "${title}"?`,
-            'This action cannot be undone.',
-            'Delete Portfolio'
-        );
+        const confirmed = await customConfirm({
+            title: 'Delete Portfolio',
+            message: `Are you sure you want to delete "${title}"? This action cannot be undone.`,
+            confirmText: 'Delete',
+            cancelText: 'Cancel',
+            type: 'danger'
+        });
 
         if (confirmed) {
             router.delete(route('admin.portfolios.destroy', id));
@@ -140,10 +142,8 @@ export default function PortfolioIndex({ auth, portfolios, filters }) {
                     </div>
                 </div>
             </div>
-            <CustomModal
-                modalState={modalState}
-                setModalState={setModalState}
-            />
+
+            <ConfirmComponent />
         </AdminLayout>
     );
 }
