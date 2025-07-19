@@ -241,7 +241,7 @@ export default function BlogShow({ blog, relatedBlogs = [] }) {
                                         {relatedBlogs.slice(0, 3).map((relatedBlog) => (
                                             <Link
                                                 key={relatedBlog.id}
-                                                href={route('blog.show', relatedBlog.slug)}
+                                                href={route('blogs.show', relatedBlog.slug)}
                                                 className="block group"
                                             >
                                                 <h4 className="text-sm font-medium text-gray-900 group-hover:text-brand-600 transition duration-200 line-clamp-2 mb-1">
@@ -283,7 +283,7 @@ export default function BlogShow({ blog, relatedBlogs = [] }) {
                             {relatedBlogs.slice(0, 3).map((relatedBlog) => (
                                 <Link
                                     key={relatedBlog.id}
-                                    href={route('blog.show', relatedBlog.slug)}
+                                    href={route('blogs.show', relatedBlog.slug)}
                                     className="bg-white rounded-xl shadow-md hover:shadow-lg transition duration-300 overflow-hidden group"
                                 >
                                     {relatedBlog.featured_image && (

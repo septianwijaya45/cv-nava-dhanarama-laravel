@@ -22,12 +22,12 @@ class FrontendController extends Controller
             ->limit(6)
             ->get();
 
-        $portfolios = Portfolio::where('status', 'active')
+        $portfolios = Portfolio::where('status', true)
             ->latest()
             ->limit(6)
             ->get();
 
-        $clients = Client::where('status', 'active')
+        $clients = Client::where('status', true)
             ->latest()
             ->limit(8)
             ->get();
@@ -110,7 +110,7 @@ class FrontendController extends Controller
 
     public function portfolio()
     {
-        $portfolios = Portfolio::where('status', 'active')
+        $portfolios = Portfolio::where('status', true)
             ->latest()
             ->paginate(12);
 
@@ -127,10 +127,10 @@ class FrontendController extends Controller
 
     public function portfolioShow($id)
     {
-        $portfolio = Portfolio::where('status', 'active')
+        $portfolio = Portfolio::where('status', true)
             ->findOrFail($id);
 
-        $relatedPortfolios = Portfolio::where('status', 'active')
+        $relatedPortfolios = Portfolio::where('status', true)
             ->where('id', '!=', $portfolio->id)
             ->where('category', $portfolio->category)
             ->limit(3)

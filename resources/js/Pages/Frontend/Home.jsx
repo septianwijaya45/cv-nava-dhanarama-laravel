@@ -49,7 +49,7 @@ export default function Home({ blogs, portfolios, clients, testimonials = [], fa
                             </div>
 
                             {/* Stats */}
-                            <div className="grid grid-cols-3 gap-6">
+                            {/* <div className="grid grid-cols-3 gap-6">
                                 <div className="text-center">
                                     <div className="text-2xl font-bold text-brand-600">{portfolios.length}+</div>
                                     <div className="text-sm text-gray-600">Proyek Selesai</div>
@@ -60,6 +60,20 @@ export default function Home({ blogs, portfolios, clients, testimonials = [], fa
                                 </div>
                                 <div className="text-center">
                                     <div className="text-2xl font-bold text-brand-600">5+</div>
+                                    <div className="text-sm text-gray-600">Tahun Pengalaman</div>
+                                </div>
+                            </div> */}
+                            <div className="grid grid-cols-3 gap-6">
+                                <div className="text-center">
+                                    <div className="text-2xl font-bold text-brand-600">35+</div>
+                                    <div className="text-sm text-gray-600">Proyek Selesai</div>
+                                </div>
+                                <div className="text-center">
+                                    <div className="text-2xl font-bold text-brand-600">38+</div>
+                                    <div className="text-sm text-gray-600">Klien Puas</div>
+                                </div>
+                                <div className="text-center">
+                                    <div className="text-2xl font-bold text-brand-600">2+</div>
                                     <div className="text-sm text-gray-600">Tahun Pengalaman</div>
                                 </div>
                             </div>
