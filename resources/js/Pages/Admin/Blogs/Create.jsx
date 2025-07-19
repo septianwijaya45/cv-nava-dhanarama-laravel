@@ -8,7 +8,7 @@ export default function CreateBlog({ auth }) {
         content: '',
         category: '',
         status: 'draft',
-        cover_image: '',
+        cover_image: null,
         published_at: ''
     });
 
@@ -16,17 +16,17 @@ export default function CreateBlog({ auth }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('admin.blogs.store'));
+        post(route('admin.blogs.store'), {
+            forceFormData: true,
+        });
     };
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            setData('cover_image', file);
             const reader = new FileReader();
-            reader.onload = (e) => {
-                setPreviewImage(e.target.result);
-                setData('cover_image', e.target.result);
-            };
+            reader.onload = (e) => setPreviewImage(e.target.result);
             reader.readAsDataURL(file);
         }
     };

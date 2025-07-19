@@ -52,19 +52,19 @@ class BlogController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'excerpt' => 'nullable|string|max:500',
             'category' => 'required|string|max:100',
-            'tags' => 'nullable|string',
-            'featured_image' => 'nullable|url',
-            'is_published' => 'boolean',
             'status' => 'required|in:draft,published',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'published_at' => 'nullable|date',
-            'meta_title' => 'nullable|string|max:255',
-            'meta_description' => 'nullable|string|max:255',
         ]);
 
         $validated['slug'] = Str::slug($validated['title']);
         $validated['author'] = auth()->user()->name;
+
+        // Handle file upload
+        if ($request->hasFile('cover_image')) {
+            $validated['cover_image'] = $request->file('cover_image')->store('blog-covers', 'public');
+        }
 
         // Ensure unique slug
         $originalSlug = $validated['slug'];
@@ -96,19 +96,26 @@ class BlogController extends Controller
 
     public function update(Request $request, Blogger $blog)
     {
+        // Debug: Log received data
+        \Log::info('Update request data:', $request->all());
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'excerpt' => 'nullable|string|max:500',
             'category' => 'required|string|max:100',
-            'tags' => 'nullable|string',
-            'featured_image' => 'nullable|url',
-            'is_published' => 'boolean',
             'status' => 'required|in:draft,published',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'published_at' => 'nullable|date',
-            'meta_title' => 'nullable|string|max:255',
-            'meta_description' => 'nullable|string|max:255',
         ]);
+
+        // Handle file upload
+        if ($request->hasFile('cover_image')) {
+            // Delete old image if exists
+            if ($blog->cover_image && \Storage::disk('public')->exists($blog->cover_image)) {
+                \Storage::disk('public')->delete($blog->cover_image);
+            }
+            $validated['cover_image'] = $request->file('cover_image')->store('blog-covers', 'public');
+        }
 
         // Update slug if title changed
         if ($validated['title'] !== $blog->title) {

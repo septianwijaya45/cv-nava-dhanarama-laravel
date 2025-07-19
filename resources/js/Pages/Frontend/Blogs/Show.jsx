@@ -80,13 +80,13 @@ export default function BlogShow({ blog, relatedBlogs = [] }) {
                 </div>
             </section>
 
-            {/* Featured Image */}
-            {blog.featured_image && (
+            {/* Cover Image */}
+            {blog.cover_image && (
                 <section className="py-8 bg-white">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="rounded-xl overflow-hidden shadow-lg">
                             <img
-                                src={blog.featured_image}
+                                src={`/storage/${blog.cover_image}`}
                                 alt={blog.title}
                                 className="w-full h-auto"
                             />
@@ -286,10 +286,10 @@ export default function BlogShow({ blog, relatedBlogs = [] }) {
                                     href={route('blogs.show', relatedBlog.slug)}
                                     className="bg-white rounded-xl shadow-md hover:shadow-lg transition duration-300 overflow-hidden group"
                                 >
-                                    {relatedBlog.featured_image && (
+                                    {relatedBlog.cover_image && (
                                         <div className="aspect-w-16 aspect-h-9">
                                             <img
-                                                src={relatedBlog.featured_image}
+                                                src={`/storage/${relatedBlog.cover_image}`}
                                                 alt={relatedBlog.title}
                                                 className="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
                                             />

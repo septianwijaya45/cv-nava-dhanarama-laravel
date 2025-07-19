@@ -99,7 +99,7 @@ export default function BlogsIndex({ blogs, categories, filters }) {
                                     {/* Featured Image */}
                                     {blog.cover_image ? (
                                         <img
-                                            src={blog.cover_image}
+                                            src={`/storage/${blog.cover_image}`}
                                             alt={blog.title}
                                             className="w-full h-48 object-cover"
                                         />

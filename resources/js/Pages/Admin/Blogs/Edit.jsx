@@ -10,31 +10,49 @@ export default function EditBlog({ auth, blog }) {
         return new Date(dt - offset).toISOString().slice(0, 16);
     };
 
-    const { data, setData, put, processing, errors } = useForm({
+    const { data, setData, put, post, processing, errors } = useForm({
         title: blog.title || '',
         content: blog.content || '',
         category: blog.category || '',
         status: blog.status || 'draft',
-        cover_image: blog.cover_image || '',
+        cover_image: null,
         published_at: formatDateTimeLocal(blog.published_at) || ''
     });
 
 
-    const [previewImage, setPreviewImage] = useState(blog.cover_image || '');
+    const [previewImage, setPreviewImage] = useState(
+        blog.cover_image ? `/storage/${blog.cover_image}` : ''
+    );
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route('admin.blogs.update', blog.id));
+
+        if (data.cover_image instanceof File) {
+            // If there's a file upload, use POST with _method spoofing
+            const formData = {
+                ...data,
+                _method: 'PUT'
+            };
+            post(route('admin.blogs.update', blog.id), formData, {
+                forceFormData: true,
+                preserveScroll: true,
+            });
+        } else {
+            // If no file upload, use regular PUT
+            const updateData = { ...data };
+            delete updateData.cover_image; // Remove null cover_image
+            put(route('admin.blogs.update', blog.id), updateData, {
+                preserveScroll: true,
+            });
+        }
     };
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            setData('cover_image', file);
             const reader = new FileReader();
-            reader.onload = (e) => {
-                setPreviewImage(e.target.result);
-                setData('cover_image', e.target.result);
-            };
+            reader.onload = (e) => setPreviewImage(e.target.result);
             reader.readAsDataURL(file);
         }
     };
