@@ -57,6 +57,8 @@ class BlogController extends Controller
             'tags' => 'nullable|string',
             'featured_image' => 'nullable|url',
             'is_published' => 'boolean',
+            'status' => 'required|in:draft,published',
+            'published_at' => 'nullable|date',
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:255',
         ]);
@@ -102,6 +104,8 @@ class BlogController extends Controller
             'tags' => 'nullable|string',
             'featured_image' => 'nullable|url',
             'is_published' => 'boolean',
+            'status' => 'required|in:draft,published',
+            'published_at' => 'nullable|date',
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:255',
         ]);

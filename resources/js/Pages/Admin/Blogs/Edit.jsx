@@ -3,13 +3,22 @@ import { Head, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function EditBlog({ auth, blog }) {
+    const formatDateTimeLocal = (dateTime) => {
+        if (!dateTime) return '';
+        const dt = new Date(dateTime);
+        const offset = dt.getTimezoneOffset() * 60000; // Handle timezone
+        return new Date(dt - offset).toISOString().slice(0, 16);
+    };
+
     const { data, setData, put, processing, errors } = useForm({
         title: blog.title || '',
         content: blog.content || '',
         category: blog.category || '',
         status: blog.status || 'draft',
-        cover_image: blog.cover_image || ''
+        cover_image: blog.cover_image || '',
+        published_at: formatDateTimeLocal(blog.published_at) || ''
     });
+
 
     const [previewImage, setPreviewImage] = useState(blog.cover_image || '');
 
@@ -112,6 +121,19 @@ export default function EditBlog({ auth, blog }) {
                                         <option value="published">Published</option>
                                     </select>
                                     {errors.status && <p className="mt-2 text-sm text-red-600">{errors.status}</p>}
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Published At</label>
+                                    <input
+                                        type="datetime-local"
+                                        value={data.published_at}
+                                        onChange={(e) => setData('published_at', e.target.value)}
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500"
+                                    />
+                                    {errors.published_at && (
+                                        <p className="mt-2 text-sm text-red-600">{errors.published_at}</p>
+                                    )}
                                 </div>
 
                                 <div className="flex justify-end space-x-4">

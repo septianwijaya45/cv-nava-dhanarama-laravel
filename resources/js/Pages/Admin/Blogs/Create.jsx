@@ -8,7 +8,8 @@ export default function CreateBlog({ auth }) {
         content: '',
         category: '',
         status: 'draft',
-        cover_image: ''
+        cover_image: '',
+        published_at: ''
     });
 
     const [previewImage, setPreviewImage] = useState('');
@@ -114,6 +115,19 @@ export default function CreateBlog({ auth }) {
                                     {errors.status && <p className="mt-2 text-sm text-red-600">{errors.status}</p>}
                                 </div>
 
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Published At</label>
+                                    <input
+                                        type="datetime-local"
+                                        value={data.published_at}
+                                        onChange={(e) => setData('published_at', e.target.value)}
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500"
+                                    />
+                                    {errors.published_at && (
+                                        <p className="mt-2 text-sm text-red-600">{errors.published_at}</p>
+                                    )}
+                                </div>
+                                
                                 <div className="flex justify-end space-x-4">
                                     <button
                                         type="button"
