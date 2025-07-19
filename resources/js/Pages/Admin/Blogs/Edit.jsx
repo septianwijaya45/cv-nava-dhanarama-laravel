@@ -79,7 +79,10 @@ export default function EditBlog({ auth, blog }) {
                                         <option value="Mobile Development">Mobile Development</option>
                                         <option value="UI/UX Design">UI/UX Design</option>
                                         <option value="Technology">Technology</option>
-                                        <option value="Tutorial">Tutorial</option>
+                                        <option value="Tutorial">Tutorial</option><option value="Edukasi">Edukasi</option>
+                                        <option value="Insight Bisnis">Insight Bisnis</option>
+                                        <option value="Panduan">Panduan</option>
+                                        <option value="Lainnya">Lainnya</option>
                                     </select>
                                     {errors.category && <p className="mt-2 text-sm text-red-600">{errors.category}</p>}
                                 </div>

@@ -72,6 +72,10 @@ export default function CreateBlog({ auth }) {
                                         <option value="UI/UX Design">UI/UX Design</option>
                                         <option value="Technology">Technology</option>
                                         <option value="Tutorial">Tutorial</option>
+                                        <option value="Edukasi">Edukasi</option>
+                                        <option value="Insight Bisnis">Insight Bisnis</option>
+                                        <option value="Panduan">Panduan</option>
+                                        <option value="Lainnya">Lainnya</option>
                                     </select>
                                     {errors.category && <p className="mt-2 text-sm text-red-600">{errors.category}</p>}
                                 </div>
@@ -127,7 +131,7 @@ export default function CreateBlog({ auth }) {
                                         <p className="mt-2 text-sm text-red-600">{errors.published_at}</p>
                                     )}
                                 </div>
-                                
+
                                 <div className="flex justify-end space-x-4">
                                     <button
                                         type="button"
