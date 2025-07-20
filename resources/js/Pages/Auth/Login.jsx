@@ -95,15 +95,6 @@ export default function Login({ status, canResetPassword }) {
                                     />
                                     <span className="ml-2 text-sm text-gray-600">Remember me</span>
                                 </label>
-
-                                {canResetPassword && (
-                                    <Link
-                                        href={route('password.request')}
-                                        className="text-sm text-brand-600 hover:text-brand-500"
-                                    >
-                                        Forgot your password?
-                                    </Link>
-                                )}
                             </div>
 
                             <div>
@@ -112,26 +103,6 @@ export default function Login({ status, canResetPassword }) {
                                 </PrimaryButton>
                             </div>
                         </form>
-
-                        <div className="mt-6">
-                            <div className="relative">
-                                <div className="absolute inset-0 flex items-center">
-                                    <div className="w-full border-t border-gray-300" />
-                                </div>
-                                <div className="relative flex justify-center text-sm">
-                                    <span className="px-2 bg-white text-gray-500">Don't have an account?</span>
-                                </div>
-                            </div>
-
-                            <div className="mt-6">
-                                <Link
-                                    href={route('register')}
-                                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-brand-600 bg-brand-50 hover:bg-brand-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500"
-                                >
-                                    Create new account
-                                </Link>
-                            </div>
-                        </div>
                     </div>
 
                     <div className="text-center">
