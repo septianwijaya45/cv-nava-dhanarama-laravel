@@ -243,7 +243,7 @@ export default function Home({ blogs, portfolios, clients, testimonials = [], fa
                                 <div key={blog.id} className="bg-gray-50 rounded-xl overflow-hidden hover:shadow-lg transition duration-300">
                                     {blog.cover_image && (
                                         <img
-                                            src={blog.cover_image}
+                                            src={`/storage/${blog.cover_image}`}
                                             alt={blog.title}
                                             className="w-full h-48 object-cover"
                                         />
