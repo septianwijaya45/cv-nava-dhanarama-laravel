@@ -7,7 +7,10 @@ import WhatsAppButton from '@/Components/WhatsAppButton/WhatsAppButton';
 export default function FrontendLayout({
     children,
     title = "NAVA DHANARAMA INDONESIA",
-    metaDescription = "Nava Dhanarama Indonesia - Spesialis pengembangan sistem informasi, otomasi bisnis, dan solusi digital untuk transformasi bisnis modern."
+    metaDescription = "Nava Dhanarama Indonesia - Spesialis pengembangan sistem informasi, otomasi bisnis, dan solusi digital untuk transformasi bisnis modern.",
+    metaKeywords = "pengembangan sistem Nganjuk, pengembangan sistem Kediri, pengembangan sistem Tulungagung, pengembangan sistem Blitar, software house Nganjuk, software house Kediri, software house Tulungagung, software house Blitar, jasa pembuatan aplikasi Nganjuk, jasa pembuatan aplikasi Kediri, jasa pembuatan aplikasi Tulungagung, jasa pembuatan aplikasi Blitar, pengembangan website Nganjuk, pengembangan website Kediri, pengembangan website Tulungagung, pengembangan website Blitar, aplikasi mobile Nganjuk, aplikasi mobile Kediri, aplikasi mobile Tulungagung, aplikasi mobile Blitar, sistem informasi Nganjuk, sistem informasi Kediri, sistem informasi Tulungagung, sistem informasi Blitar, jasa IT Nganjuk, jasa IT Kediri, jasa IT Tulungagung, jasa IT Blitar, digitalisasi bisnis Nganjuk, digitalisasi bisnis Kediri, digitalisasi bisnis Tulungagung, digitalisasi bisnis Blitar, Laravel developer Nganjuk, Laravel developer Kediri, Laravel developer Tulungagung, Laravel developer Blitar, React developer Nganjuk, React developer Kediri, React developer Tulungagung, React developer Blitar, custom software Nganjuk, custom software Kediri, custom software Tulungagung, custom software Blitar, integrasi WhatsApp API Nganjuk, integrasi WhatsApp API Kediri, integrasi WhatsApp API Tulungagung, integrasi WhatsApp API Blitar, fitur AI moderasi konten Nganjuk, aplikasi ERP Nganjuk, aplikasi ERP Kediri, aplikasi ERP Tulungagung, aplikasi ERP Blitar, sistem langganan bulanan Nganjuk, sistem langganan bulanan Kediri, sistem langganan bulanan Tulungagung, sistem langganan bulanan Blitar, aplikasi laundry QRIS Nganjuk, sistem keuangan digital Nganjuk, aplikasi manajemen pegawai Kediri, aplikasi presensi pegawai Blitar, aplikasi sekolah online Tulungagung, pengembangan aplikasi kasir Nganjuk, aplikasi CRM Kediri, aplikasi booking online Blitar, digitalisasi UMKM Tulungagung, pengembangan sistem keuangan Jawa Timur, pembuatan aplikasi custom Jawa Timur, jasa pembuatan website profesional Jawa Timur, pengembangan aplikasi bisnis Jawa Timur"
+,
+    ogImage = "/nava3d.png"
 }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const { t } = useLanguage();
@@ -25,12 +28,12 @@ export default function FrontendLayout({
         <>
             <Head title={title}>
                 <meta name="description" content={metaDescription} />
-                <meta name="keywords" content="pengembangan sistem, otomasi bisnis, website development, mobile app, sistem informasi, digital transformation, Laravel, React, custom software" />
+                <meta name="keywords" content={metaKeywords} />
                 <meta name="author" content="Nava Dhanarama Indonesia" />
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={metaDescription} />
                 <meta property="og:type" content="website" />
-                <meta property="og:image" content="/nava3d.png" />
+                <meta property="og:image" content={ogImage} />
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content={title} />
                 <meta name="twitter:description" content={metaDescription} />

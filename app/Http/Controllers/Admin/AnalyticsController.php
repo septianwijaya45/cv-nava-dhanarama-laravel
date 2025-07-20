@@ -75,12 +75,18 @@ class AnalyticsController extends Controller
         ]);
     }
 
-    public function websiteAnalytics()
+    public function websiteAnalytics(Request $request)
     {
-        // Ambil data dari tabel web_analytics
-        $rawAnalytics = \DB::table('web_analytics')
-            ->select('url', 'ip_address', 'viewed_at')
-            ->get();
+        // Query untuk mendapatkan data analytics
+        $query = \DB::table('web_analytics')
+            ->select('url', 'ip_address', 'viewed_at');
+
+        // Filter berdasarkan tanggal jika ada
+        if ($request->filled('date')) {
+            $query->whereDate('viewed_at', $request->date);
+        }
+
+        $rawAnalytics = $query->get();
 
         // Kelompokkan berdasarkan URL
         $grouped = collect($rawAnalytics)
@@ -95,12 +101,15 @@ class AnalyticsController extends Controller
                     'uniqueIps' => $uniqueIps,
                     'lastViewed' => $lastViewed ? Carbon::parse($lastViewed)->format('Y-m-d H:i:s') : null,
                 ];
-            })->values();
+            })
+            ->sortByDesc('views')
+            ->values();
 
         return Inertia::render('Admin/Analytics/Website', [
             'analytics' => [
                 'webAnalytics' => $grouped
-            ]
+            ],
+            'filters' => $request->only(['date'])
         ]);
     }
 }

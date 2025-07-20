@@ -141,6 +141,9 @@ export default function BlogIndex({ auth, blogs, categories, filters }) {
                                                     Status
                                                 </th>
                                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Meta SEO
+                                                </th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Published At
                                                 </th>
                                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -177,6 +180,27 @@ export default function BlogIndex({ auth, blogs, categories, filters }) {
                                                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadge(blog.status)}`}>
                                                             {blog.status}
                                                         </span>
+                                                    </td>
+                                                    <td className="px-6 py-4 text-sm text-gray-900">
+                                                        <div className="space-y-1">
+                                                            <div className="flex items-center space-x-2">
+                                                                <span className="text-xs text-gray-500">Title:</span>
+                                                                <span className={`text-xs ${blog.meta_title ? 'text-green-600' : 'text-red-500'}`}>
+                                                                    {blog.meta_title ? '✓' : '✗'}
+                                                                </span>
+                                                            </div>
+                                                            <div className="flex items-center space-x-2">
+                                                                <span className="text-xs text-gray-500">Desc:</span>
+                                                                <span className={`text-xs ${blog.meta_description ? 'text-green-600' : 'text-red-500'}`}>
+                                                                    {blog.meta_description ? '✓' : '✗'}
+                                                                </span>
+                                                            </div>
+                                                            {blog.meta_title && (
+                                                                <div className="text-xs text-gray-600 truncate max-w-32" title={blog.meta_title}>
+                                                                    {blog.meta_title}
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                         {blog.published_at ? new Date(blog.published_at).toLocaleDateString() : '-'}

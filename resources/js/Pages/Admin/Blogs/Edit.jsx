@@ -17,7 +17,9 @@ export default function EditBlog({ auth, blog }) {
         category: blog.category || '',
         status: blog.status || 'draft',
         cover_image: null,
-        published_at: formatDateTimeLocal(blog.published_at) || ''
+        published_at: formatDateTimeLocal(blog.published_at) || '',
+        meta_title: blog.meta_title || '',
+        meta_description: blog.meta_description || ''
     });
 
 
@@ -35,6 +37,8 @@ const handleSubmit = (e) => {
     formData.append('category', data.category);
     formData.append('status', data.status);
     formData.append('published_at', data.published_at || '');
+    formData.append('meta_title', data.meta_title || '');
+    formData.append('meta_description', data.meta_description || '');
     formData.append('_method', 'PUT');
 
     if (data.cover_image) {
@@ -158,6 +162,51 @@ const handleSubmit = (e) => {
                                     {errors.published_at && (
                                         <p className="mt-2 text-sm text-red-600">{errors.published_at}</p>
                                     )}
+                                </div>
+
+                                {/* SEO Meta Fields */}
+                                <div className="border-t pt-6">
+                                    <h3 className="text-lg font-medium text-gray-900 mb-4">SEO Settings</h3>
+
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700">
+                                                Meta Title
+                                                <span className="text-gray-500 text-xs">(Max 60 characters for SEO)</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                value={data.meta_title}
+                                                onChange={(e) => setData('meta_title', e.target.value)}
+                                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500"
+                                                placeholder="If empty, will use the blog title"
+                                                maxLength="60"
+                                            />
+                                            <div className="mt-1 text-xs text-gray-500">
+                                                {data.meta_title.length}/60 characters
+                                            </div>
+                                            {errors.meta_title && <p className="mt-2 text-sm text-red-600">{errors.meta_title}</p>}
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700">
+                                                Meta Description
+                                                <span className="text-gray-500 text-xs">(Max 160 characters for SEO)</span>
+                                            </label>
+                                            <textarea
+                                                value={data.meta_description}
+                                                onChange={(e) => setData('meta_description', e.target.value)}
+                                                rows={3}
+                                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500"
+                                                placeholder="Write a compelling description for search engines"
+                                                maxLength="160"
+                                            />
+                                            <div className="mt-1 text-xs text-gray-500">
+                                                {data.meta_description.length}/160 characters
+                                            </div>
+                                            {errors.meta_description && <p className="mt-2 text-sm text-red-600">{errors.meta_description}</p>}
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div className="flex justify-end space-x-4">

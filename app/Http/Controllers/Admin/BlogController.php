@@ -56,6 +56,8 @@ class BlogController extends Controller
             'status' => 'required|in:draft,published',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'published_at' => 'nullable|date',
+            'meta_title' => 'nullable|string|max:60',
+            'meta_description' => 'nullable|string|max:160',
         ]);
 
         $validated['slug'] = Str::slug($validated['title']);
@@ -106,6 +108,8 @@ class BlogController extends Controller
             'status' => 'required|in:draft,published',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'published_at' => 'nullable|date',
+            'meta_title' => 'nullable|string|max:60',
+            'meta_description' => 'nullable|string|max:160',
         ]);
 
         // Handle file upload

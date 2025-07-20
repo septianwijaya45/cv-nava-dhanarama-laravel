@@ -18,7 +18,9 @@ class Blogger extends Model
         'content',
         'category',
         'status',
-        'published_at'
+        'published_at',
+        'meta_title',
+        'meta_description'
     ];
 
     protected $casts = [
