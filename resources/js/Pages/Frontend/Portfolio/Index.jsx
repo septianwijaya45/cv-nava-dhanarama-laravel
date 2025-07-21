@@ -73,7 +73,7 @@ export default function PortfolioIndex({ portfolios, categories }) {
                                     <div className="relative overflow-hidden">
                                         {portfolio.image ? (
                                             <img
-                                                src={portfolio.image}
+                                                src={`/storage/${portfolio.image}`}
                                                 alt={portfolio.title}
                                                 className="w-full h-64 object-cover group-hover:scale-105 transition duration-300"
                                             />
