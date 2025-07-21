@@ -97,7 +97,7 @@ export default function PortfolioIndex({ auth, portfolios, filters }) {
                                         <div key={portfolio.id} className="border border-gray-200 rounded-lg overflow-hidden">
                                             {portfolio.image && (
                                                 <img
-                                                    src={portfolio.image}
+                                                    src={`/storage/${portfolio.image}`}
                                                     alt={portfolio.title}
                                                     className="w-full h-48 object-cover"
                                                 />

@@ -110,8 +110,7 @@ class FrontendController extends Controller
 
     public function portfolio()
     {
-        $portfolios = Portfolio::where('status', true)
-            ->latest()
+        $portfolios = Portfolio::latest()
             ->paginate(12);
 
         $categories = Portfolio::select('category')
@@ -127,8 +126,7 @@ class FrontendController extends Controller
 
     public function portfolioShow($id)
     {
-        $portfolio = Portfolio::where('status', true)
-            ->findOrFail($id);
+        $portfolio = Portfolio::findOrFail($id);
 
         $relatedPortfolios = Portfolio::where('status', true)
             ->where('id', '!=', $portfolio->id)

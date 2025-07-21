@@ -8,28 +8,31 @@ export default function CreatePortfolio({ auth }) {
         description: '',
         category: '',
         client: '',
-        project_url: '',
+        demo_url: '',
         github_url: '',
         technologies: '',
-        image: '',
-        featured: false
+        image: null,
+        featured: false,
+        status: 'planning',
+        duration: '',
+        team_size: 1
     });
 
     const [previewImage, setPreviewImage] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('admin.portfolios.store'));
+        post(route('admin.portfolios.store'), {
+            forceFormData: true,
+        });
     };
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            setData('image', file);
             const reader = new FileReader();
-            reader.onload = (e) => {
-                setPreviewImage(e.target.result);
-                setData('image', e.target.result);
-            };
+            reader.onload = (e) => setPreviewImage(e.target.result);
             reader.readAsDataURL(file);
         }
     };
@@ -69,12 +72,16 @@ export default function CreatePortfolio({ auth }) {
                                             value={data.category}
                                             onChange={(e) => setData('category', e.target.value)}
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500"
+                                            required
                                         >
                                             <option value="">Select Category</option>
                                             <option value="Web Development">Web Development</option>
-                                            <option value="Mobile App">Mobile App</option>
-                                            <option value="UI/UX Design">UI/UX Design</option>
+                                            <option value="Mobile Development">Mobile Development</option>
+                                            <option value="Desktop Application">Desktop Application</option>
                                             <option value="E-commerce">E-commerce</option>
+                                            <option value="CMS">CMS</option>
+                                            <option value="API Development">API Development</option>
+                                            <option value="Other">Other</option>
                                         </select>
                                         {errors.category && <p className="mt-2 text-sm text-red-600">{errors.category}</p>}
                                     </div>
@@ -92,7 +99,7 @@ export default function CreatePortfolio({ auth }) {
                                     {errors.description && <p className="mt-2 text-sm text-red-600">{errors.description}</p>}
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700">Client</label>
                                         <input
@@ -105,28 +112,53 @@ export default function CreatePortfolio({ auth }) {
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">Technologies</label>
+                                        <label className="block text-sm font-medium text-gray-700">Duration</label>
                                         <input
                                             type="text"
-                                            value={data.technologies}
-                                            onChange={(e) => setData('technologies', e.target.value)}
-                                            placeholder="Laravel, React, MySQL"
+                                            value={data.duration}
+                                            onChange={(e) => setData('duration', e.target.value)}
+                                            placeholder="e.g., 3 months"
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500"
                                         />
-                                        {errors.technologies && <p className="mt-2 text-sm text-red-600">{errors.technologies}</p>}
+                                        {errors.duration && <p className="mt-2 text-sm text-red-600">{errors.duration}</p>}
                                     </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700">Team Size</label>
+                                        <input
+                                            type="number"
+                                            value={data.team_size}
+                                            onChange={(e) => setData('team_size', parseInt(e.target.value))}
+                                            min="1"
+                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500"
+                                        />
+                                        {errors.team_size && <p className="mt-2 text-sm text-red-600">{errors.team_size}</p>}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Technologies</label>
+                                    <input
+                                        type="text"
+                                        value={data.technologies}
+                                        onChange={(e) => setData('technologies', e.target.value)}
+                                        placeholder="Laravel, React, MySQL"
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500"
+                                    />
+                                    {errors.technologies && <p className="mt-2 text-sm text-red-600">{errors.technologies}</p>}
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">Project URL</label>
+                                        <label className="block text-sm font-medium text-gray-700">Demo URL</label>
                                         <input
                                             type="url"
-                                            value={data.project_url}
-                                            onChange={(e) => setData('project_url', e.target.value)}
+                                            value={data.demo_url}
+                                            onChange={(e) => setData('demo_url', e.target.value)}
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500"
+                                            placeholder="https://demo.example.com"
                                         />
-                                        {errors.project_url && <p className="mt-2 text-sm text-red-600">{errors.project_url}</p>}
+                                        {errors.demo_url && <p className="mt-2 text-sm text-red-600">{errors.demo_url}</p>}
                                     </div>
 
                                     <div>
@@ -136,6 +168,7 @@ export default function CreatePortfolio({ auth }) {
                                             value={data.github_url}
                                             onChange={(e) => setData('github_url', e.target.value)}
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500"
+                                            placeholder="https://github.com/username/repo"
                                         />
                                         {errors.github_url && <p className="mt-2 text-sm text-red-600">{errors.github_url}</p>}
                                     </div>
@@ -155,16 +188,33 @@ export default function CreatePortfolio({ auth }) {
                                     {errors.image && <p className="mt-2 text-sm text-red-600">{errors.image}</p>}
                                 </div>
 
-                                <div>
-                                    <label className="flex items-center">
-                                        <input
-                                            type="checkbox"
-                                            checked={data.featured}
-                                            onChange={(e) => setData('featured', e.target.checked)}
-                                            className="rounded border-gray-300 text-brand-600 shadow-sm focus:border-brand-500 focus:ring-brand-500"
-                                        />
-                                        <span className="ml-2 text-sm text-gray-700">Featured Project</span>
-                                    </label>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700">Status</label>
+                                        <select
+                                            value={data.status}
+                                            onChange={(e) => setData('status', e.target.value)}
+                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500"
+                                            required
+                                        >
+                                            <option value="planning">Planning</option>
+                                            <option value="in_progress">In Progress</option>
+                                            <option value="completed">Completed</option>
+                                        </select>
+                                        {errors.status && <p className="mt-2 text-sm text-red-600">{errors.status}</p>}
+                                    </div>
+
+                                    <div>
+                                        <label className="flex items-center">
+                                            <input
+                                                type="checkbox"
+                                                checked={data.featured}
+                                                onChange={(e) => setData('featured', e.target.checked)}
+                                                className="rounded border-gray-300 text-brand-600 shadow-sm focus:border-brand-500 focus:ring-brand-500"
+                                            />
+                                            <span className="ml-2 text-sm text-gray-700">Featured Project</span>
+                                        </label>
+                                    </div>
                                 </div>
 
                                 <div className="flex justify-end space-x-4">

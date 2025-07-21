@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Head, useForm, Link } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { PhotoIcon } from '@heroicons/react/24/outline';
+import { router } from '@inertiajs/react';
 
 export default function Edit({ portfolio }) {
     // Map legacy boolean status (true/false) to string value for select
@@ -16,7 +17,7 @@ export default function Edit({ portfolio }) {
         description: portfolio.description || '',
         category: portfolio.category || '',
         technologies: portfolio.technologies || '',
-        image: portfolio.image || '',
+        image: null, // For new file upload
         demo_url: portfolio.demo_url || '',
         github_url: portfolio.github_url || '',
         client: portfolio.client || '',
@@ -26,24 +27,62 @@ export default function Edit({ portfolio }) {
         status: portfolio.status,
     });
 
-    const [imagePreview, setImagePreview] = useState(portfolio.image || null);
+    const [imagePreview, setImagePreview] = useState(
+        portfolio.image ? `/storage/${portfolio.image}` : null
+    );
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Submit form data: useForm.put takes options object as second arg
-        put(
-            route('admin.portfolios.update', portfolio.id),
-            data,
-            {
+
+        // If there's a new image file, use POST with _method for file upload
+        if (data.image && data.image instanceof File) {
+            const formData = new FormData();
+            formData.append('title', data.title);
+            formData.append('description', data.description);
+            formData.append('category', data.category);
+            formData.append('technologies', data.technologies || '');
+            formData.append('demo_url', data.demo_url || '');
+            formData.append('github_url', data.github_url || '');
+            formData.append('client', data.client || '');
+            formData.append('duration', data.duration || '');
+            formData.append('team_size', data.team_size);
+            formData.append('featured', data.featured ? '1' : '0');
+            formData.append('status', data.status);
+            formData.append('image', data.image);
+            formData.append('_method', 'PUT');
+
+            router.post(route('admin.portfolios.update', portfolio.id), formData, {
+                forceFormData: true,
                 onSuccess: () => reset(),
-            }
-        );
+            });
+        } else {
+            // No new image, use regular PUT request
+            put(route('admin.portfolios.update', portfolio.id), {
+                title: data.title,
+                description: data.description,
+                category: data.category,
+                technologies: data.technologies,
+                demo_url: data.demo_url,
+                github_url: data.github_url,
+                client: data.client,
+                duration: data.duration,
+                team_size: data.team_size,
+                featured: data.featured,
+                status: data.status,
+            }, {
+                onSuccess: () => reset(),
+            });
+        }
     };
 
     const handleImageChange = (e) => {
-        const url = e.target.value;
-        setData('image', url);
-        setImagePreview(url);
+        const file = e.target.files[0];
+        if (file) {
+            setData('image', file);
+            const reader = new FileReader();
+            reader.onload = (e) => setImagePreview(e.target.result);
+            reader.readAsDataURL(file);
+        }
     };
 
     return (
@@ -137,21 +176,22 @@ export default function Edit({ portfolio }) {
 
                                 <div>
                                     <label htmlFor="image" className="block text-sm font-medium text-gray-700">
-                                        Project Image URL
+                                        Project Image
                                     </label>
                                     <input
-                                        type="url"
+                                        type="file"
                                         id="image"
-                                        value={data.image}
+                                        accept="image/*"
                                         onChange={handleImageChange}
-                                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                        placeholder="https://example.com/image.jpg"
+                                        className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
                                     />
                                     {errors.image && <p className="mt-2 text-sm text-red-600">{errors.image}</p>}
 
                                     {imagePreview && (
                                         <div className="mt-4">
-                                            <p className="text-sm text-gray-500 mb-2">Image Preview:</p>
+                                            <p className="text-sm text-gray-500 mb-2">
+                                                {data.image ? 'New Image Preview:' : 'Current Image:'}
+                                            </p>
                                             <img
                                                 src={imagePreview}
                                                 alt="Preview"

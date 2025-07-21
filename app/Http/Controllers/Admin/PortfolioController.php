@@ -48,7 +48,7 @@ class PortfolioController extends Controller
             'description' => 'required|string',
             'category' => 'required|string|max:100',
             'technologies' => 'nullable|string',
-            'image' => 'nullable|url',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'demo_url' => 'nullable|url',
             'github_url' => 'nullable|url',
             'client' => 'nullable|string|max:255',
@@ -57,6 +57,11 @@ class PortfolioController extends Controller
             'featured' => 'boolean',
             'status' => 'required|in:completed,in_progress,planning',
         ]);
+
+        // Handle file upload
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('portfolio-images', 'public');
+        }
 
         Portfolio::create($validated);
 
@@ -86,7 +91,7 @@ class PortfolioController extends Controller
             'description' => 'required|string',
             'category' => 'required|string|max:100',
             'technologies' => 'nullable|string',
-            'image' => 'nullable|url',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'demo_url' => 'nullable|url',
             'github_url' => 'nullable|url',
             'client' => 'nullable|string|max:255',
@@ -95,6 +100,15 @@ class PortfolioController extends Controller
             'featured' => 'boolean',
             'status' => 'required|in:completed,in_progress,planning',
         ]);
+
+        // Handle file upload
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($portfolio->image && \Storage::disk('public')->exists($portfolio->image)) {
+                \Storage::disk('public')->delete($portfolio->image);
+            }
+            $validated['image'] = $request->file('image')->store('portfolio-images', 'public');
+        }
 
         $portfolio->update($validated);
 
