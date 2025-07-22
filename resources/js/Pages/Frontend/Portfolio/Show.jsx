@@ -66,7 +66,7 @@ export default function PortfolioShow({ portfolio, relatedPortfolios }) {
                         <div>
                             {portfolio.image ? (
                                 <img
-                                    src={portfolio.image}
+                                    src={`/storage/${portfolio.image}`}
                                     alt={portfolio.title}
                                     className="w-full rounded-xl shadow-2xl"
                                 />
